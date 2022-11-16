@@ -1,5 +1,7 @@
 import numpy as np
 import torch
+import clip
+
 
 def print_clip_info(model):
     input_resolution = model.visual.input_resolution

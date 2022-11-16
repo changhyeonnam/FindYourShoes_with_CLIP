@@ -24,7 +24,6 @@ class ShoesImageDataset(Dataset):
                 root:str,
                 meta_info_path:str,
                 preprocess,
-                device,
                 verbose: bool=True
                 ) ->None:
         super(ShoesImageDataset).__init__()
@@ -33,23 +32,24 @@ class ShoesImageDataset(Dataset):
         self.verbose = verbose
         self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict = self._load_meta_info(meta_info_path)
         if self.verbose:
+            print(f'\n{"*" * 10} Preprocessing about Images is Started. {"*" * 10}\n')
             print(f'Length of name_dict: {len(self.name_dict)}\n'
                   f'Length of brand_dict: {len(self.brand_dict)}\n'
                   f'Length of color_dict: {len(self.color_dict)}\n'
                   f'Length of hightop_dict: {len(self.hightop_dict)}\n'
                   f'Length of meta_dict: {len(self.meta_dict)}')
 
-        self.preproc_image_list = self._parse_image_files(root=self._root, name_dict=self.name_dict,device=device)
+        self.preproc_image_list = self._parse_image_files(root=self._root, name_dict=self.name_dict)
 
     def __len__(self):
-        return len(precomp_image_list)
+        return len(self.preproc_image_list)
 
     def _line_mapper(self, line):
-        prod_id, precomp_image = line
+        prod_id, preproc_image = line
         meta_info = self.meta_dict[prod_id]
         brand,color,hightop,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.name
         bid,cid,hid,nid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.name_dict[name]
-        return prod_id, precomp_image, bid, cid, hid, nid
+        return prod_id, preproc_image, bid, cid, hid, nid
 
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
@@ -76,7 +76,7 @@ class ShoesImageDataset(Dataset):
     def get_dict(self):
         return self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict
 
-    def _parse_image_files(self,root:str, name_dict:dict,device):
+    def _parse_image_files(self,root:str, name_dict:dict):
         dir_list = os.listdir(path=root)
         preproc_image_list = []
         preproc_image_dict = {}
@@ -89,24 +89,22 @@ class ShoesImageDataset(Dataset):
             preproc_image_dict[prod_name]=len(file_list)
             for file_name in file_list:
                 file_path = os.path.join(path,file_name)
-                preproc_image = self._preprocess(Image.open(file_path)).unsqueeze(0).to(device)
+                preproc_image = self._preprocess(Image.open(file_path))
                 preproc_image_list.append([prod_id,preproc_image])
 
         if self.verbose:
             for k,v in preproc_image_dict.items():
                 print(f'# {k} : {v}')
 
-        print(f'{"*"*10}Preprocessing is Completed.{"*"*10}')
+            print(f'\n{"*"*10} Preprocessing about images is Completed. {"*"*10}\n')
 
         return preproc_image_list
 
 if __name__ == "__main__":
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model, preprocess = clip.load("ViT-B/32")
     ROOT_PATH = "converse dataset"
     meta_info_path = "meta_info.csv"
     dataset = ShoesImageDataset(root=ROOT_PATH,
                                 preprocess=preprocess,
                                 meta_info_path=meta_info_path,
-                                device=device,
                                 verbose=True)

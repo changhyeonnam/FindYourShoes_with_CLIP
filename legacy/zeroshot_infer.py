@@ -88,7 +88,7 @@ if __name__ =="__main__":
         'a bright photo of the {} sneakers.'
     ]
 
-    ROOT_PATH = "dataset"
+    ROOT_PATH = "../dataset"
     DIR_CONVERSE = os.path.join(ROOT_PATH,'converse')
     FILE_LIST = os.listdir(DIR_CONVERSE)
     print('list of files: ', FILE_LIST)

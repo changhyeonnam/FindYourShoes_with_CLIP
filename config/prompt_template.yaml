@@ -1,19 +1,19 @@
 name:
-    - shoes made by the \{\}.
-    - \{\} is brand of this shoes.
-    - a photo of the \{\} shoes.
+    - 'shoes made by the {}.'
+    - '{} is brand of this shoes.'
+    - 'a photo of the {} shoes.'
 
 brand:
-    - shoes made by the \{\}.
-    - \{\} is brand of this shoes.
-    - a photo of the \{\} shoes.
+    - 'shoes made by the {}.'
+    - '{} is brand of this shoes.'
+    - 'a photo of the {} shoes.'
 
 color:
-    - a photo of the \{\} color shoes.
-    - a photo of a \{\} shoes.
-    - Color of shoes is \{\}
+    - 'a photo of the {} color shoes.'
+    - 'a photo of a {} shoes.'
+    - 'Color of shoes is {}'
 
-height:
-    - a photo of the {} shoes.
-    - a photo of a {} sneakers.
-    - a bright photo of the {} sneakers.
+hightop:
+    - 'a photo of the {} shoes.'
+    - 'a photo of a {} sneakers.'
+    - 'a bright photo of the {} sneakers.'
