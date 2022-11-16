@@ -6,7 +6,7 @@ from pkg_resources import packaging
 from utils import print_clip_info
 from data import ShoesImageDataset
 from clip_precompute import TextPreCompute
-from metric import accuracy
+from metric import accuracy,print_acc
 from torch.utils.data import DataLoader
 
 if __name__=='__main__':
@@ -26,7 +26,6 @@ if __name__=='__main__':
     prompt_path = "config/prompt_template.yaml"
 
     dataset = ShoesImageDataset(root=ROOT_PATH,
-                                model=model,
                                 preprocess=preprocess,
                                 meta_info_path=meta_info_path,
                                 device=device,
@@ -75,9 +74,11 @@ if __name__=='__main__':
             hightop_top1 += acc1
             hightop_top5 += acc5
 
-            n += images.size(0)
+            n += precomp_image.size(0)
 
-
+        print_acc('brand', brand_top1,brand_top5)
+        print_acc('color', color_top1,color_top5)
+        print_acc('hightop', hightop_top1,hightop_top5)
 
 
 
