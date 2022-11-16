@@ -24,7 +24,8 @@ def update_dict_string(dt, key, value):
 def update_dict(dict: dict, key, value=None):
     if key not in dict:
         if value is None:
-            dict[key] = len(dict) + 1
+            dict[key] = len(dict) # 0-base
+            # dict[key] = len(dict)+1 # 1-base
         else:
             dict[key] = value
 

@@ -1,6 +1,5 @@
 import os
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Dict,List,Optional,Tuple
 from torch.utils.data import Dataset
 from PIL import Image
@@ -45,10 +44,13 @@ class ShoesImageDataset(Dataset):
         return len(self.preproc_image_list)
 
     def _line_mapper(self, line):
+
         prod_id, preproc_image = line
+
         meta_info = self.meta_dict[prod_id]
         brand,color,hightop,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.name
         bid,cid,hid,nid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.name_dict[name]
+
         return prod_id, preproc_image, bid, cid, hid, nid
 
     def __getitem__(self, idx):

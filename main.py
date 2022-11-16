@@ -68,6 +68,7 @@ if __name__=='__main__':
 
             # Secondly zeroshot with color
             logits = (100.0 * image_features @ color_weights)
+            exit(1)
             acc1, acc5 = accuracy(logits, target_color, topk=(1, 5))
             color_top1 += acc1
             color_top5 += acc5

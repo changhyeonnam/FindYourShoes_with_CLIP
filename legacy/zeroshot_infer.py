@@ -121,10 +121,6 @@ if __name__ =="__main__":
             image_features = model.encode_image(images)
             image_features /= image_features.norm(dim=-1, keepdim=True)
             logits = (100.0 * image_features @ zeroshot_weights)
-            # print(logits.shape)
-            # print(image_features.shape)
-            # print(zeroshot_weights.shape)
-            # exit(1)
 
             # measure accuracy
             acc1, acc5 = accuracy(logits, target, topk=(1, 5))
