@@ -3,54 +3,80 @@ import torch
 import clip
 from tqdm.notebook import tqdm
 from pkg_resources import packaging
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
-
-def print_clip_info(model):
-    input_resolution = model.visual.input_resolution
-    context_length = model.context_length
-    vocab_size = model.vocab_size
-
-    print("Model parameters:", f"{np.sum([int(np.prod(p.shape)) for p in model.parameters()]):,}")
-    print("Input resolution:", input_resolution)
-    print("Context length:", context_length)
-    print("Vocab size:", vocab_size)
-
+from utils import print_clip_info
+from data import ShoesImageDataset
+from clip_precompute import TextPreCompute
+from metric import accuracy
+from torch.utils.data import DataLoader
 
 if __name__=='__main__':
-    print(clip.available_models())
-    model, preprocess = clip.load("ViT-B/32")
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+    # print available models
+    print(clip.available_models())
+    # load model
+    model, preprocess = clip.load("ViT-B/32")
+    # print model information
     print_clip_info(model)
 
-    dataset_classes = [
-        'converse high black',
-        'converse high deep bordeaux',
-        'converse high midnight clover',
-        'converse high parchment',
-        'converse high rush blue',
-        'converse high sunflower',
-        'converse high white',
-        'converse low black',
-        'converse low deep bordeaux',
-        'converse low midnight clover',
-        'converse low parchment',
-        'converse low rush blue',
-        'converse low sunflower',
-        'converse low white',
-        'converse onestar black',
-        'converse onestar white',
-        'converse run star hike high white',
-        'converse run star hike low black',
-        'converse run star hike low rush blue',
-        'converse run star hike low white'
-    ]
+    ROOT_PATH = "converse dataset"
+    meta_info_path = "example.csv"
+    prompt_path = "config/prompt_template.yaml"
 
-    dataset_templates = [
-        'a photo of {} shoes.',
-        'a photo of shoes that is {}.'
-        'a photo of shoes and the name is {}.'
-    ]
-    print(f"{len(dataset_classes)} classes, {len(dataset_templates)} templates")
-    dataset_brand_classes = ['converse']
+    dataset = ShoesImageDataset(root=ROOT_PATH,
+                                preprocess=preprocess,
+
+                                meta_info_path=meta_info_path,
+                                verbose=True)
+
+    dataloader = DataLoader(dataset=dataset,  batch_size=16, num_workers=1)
+
+    # get dictionary about shoes.
+    name_dict, brand_dict, color_dict, hightop_dict, meta_dict = dataset.get_dict()
+
+    # precompute text and prompt template with clip moodel.
+    encoded_text = TextPreCompute(model, device, prompt_path,
+                                  name_dict,
+                                  brand_dict,
+                                  color_dict,
+                                  hightop_dict)
+
+    name_weights, brand_weights, color_weights, hightop_weights = encoded_text.load_prompt_template()
+
+    with torch.no_grad():
+        brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, hightop_top1, hightop_top5, n = \
+            0., 0., 0.,0., 0., 0.,0., 0., 0.
+
+        for i, prod_id, precomp_image, bid, cid, hid, nid in enumerate(dataloader):
+
+            precomp_image = precomp_image.to(device)
+            target_brand = bid.to(device)
+            target_color = cid.to(device)
+            target_hightop = hid.to(device)
+            target_name = nid.to(device)
+
+            # First zeroshot with brand
+            logits = (100.0 * precomp_image @ brand_weights)
+            acc1, acc5 = accuracy(logits, target_brand, topk=(1, 5))
+            brand_top1 += acc1
+            brand_top5 += acc5
+
+            # Secondly zeroshot with color
+            logits = (100.0 * precomp_image @ color_weights)
+            acc1, acc5 = accuracy(logits, target_color, topk=(1, 5))
+            color_top1 += acc1
+            color_top5 += acc5
+
+            # Thirdly zeroshot with hightop
+            logits = (100.0 * precomp_image @ hightop_weights)
+            acc1, acc5 = accuracy(logits, target_hightop, topk=(1, 5))
+            hightop_top1 += acc1
+            hightop_top5 += acc5
+
+
+            n += images.size(0)
+
+
+
+
 

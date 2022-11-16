@@ -24,6 +24,7 @@ class ShoesImageDataset(Dataset):
                 root:str,
                 meta_info_path:str,
                 preprocess,
+                model,
                 verbose: bool=True
                 ) ->None:
         super().__init__()
@@ -37,20 +38,21 @@ class ShoesImageDataset(Dataset):
                   f'Length of color_dict: {len(color_dict)}\n'
                   f'Length of hightop_dict: {len(hightop_dict)}\n'
                   f'Length of meta_dict: {len(meta_dict)}')
-        self.preproc_image_list = self._parse_image_files(root=self._root, name_dict=name_dict)
+
+        self.precomp_image_list = self._parse_image_files(root=self._root, name_dict=name_dict)
 
     def __len__(self):
-        return len(preproc_image_list)
+        return len(precomp_image_list)
 
     def _line_mapper(self, line):
         prod_id, preproc_image = line
         meta_info = self.meta_dict[prod_id]
         brand,color,hightop,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.name
         bid,cid,hid,nid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.name_dict[name]
-        return prod_id, preproc_image, bid, cid, nid
+        return prod_id, preproc_image, bid, cid, hid, nid
 
     def __getitem__(self, idx):
-        return self._line_mapper(self.preproc_image_list[idx])
+        return self._line_mapper(self.precomp_image_list[idx])
 
     def _load_meta_info(self,path):
         df = pd.read_csv(path)
@@ -71,18 +73,25 @@ class ShoesImageDataset(Dataset):
             update_dict(dict=meta_dict,key=name_dict[name],value=meta_info)
         return name_dict, brand_dict, color_dict, hightop_dict, meta_dict
 
-    def _parse_image_files(self,root:str, name_dict:dict):
+    def get_dict(self):
+        return self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict
+
+    def _parse_image_files(self,root:str, name_dict:dict, model):
         dir_list = os.listdir(path=root)
-        preproc_image_list = []
+        precomp_image_list = []
         for prod_name in dir_list:
             prod_id = name_dict[prod_name]
             path = os.path.join(root, dir_name)
             file_list = os.listdir(path)
+
             for file_name in file_list:
                 file_path = os.path.join(path,file_name)
                 preproc_image = self._preprocess(Image.open(file_path))
-                preproc_image_list.append([prod_id,preproc_image])
-        return preproc_image_list
+                precomp_image = model.encode_image(preproc_image)
+                precomp_image /= precomp_image.norm(dim=-1, keepdim=True)
+                precomp_image_list.append([prod_id,precomp_image])
+
+        return precomp_image_list
 
 if __name__ == "__main__":
     model, preprocess = clip.load("ViT-B/32")
