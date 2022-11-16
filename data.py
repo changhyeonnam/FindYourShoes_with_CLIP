@@ -49,7 +49,6 @@ class ShoesImageDataset(Dataset):
         bid,cid,hid,nid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.name_dict[name]
         return prod_id, preproc_image, bid, cid, nid
 
-
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
 
