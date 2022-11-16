@@ -14,8 +14,10 @@ if __name__=='__main__':
 
     # print available models
     print(clip.available_models())
+
     # load model
     model, preprocess = clip.load("ViT-B/32")
+
     # print model information
     print_clip_info(model)
 
@@ -24,9 +26,10 @@ if __name__=='__main__':
     prompt_path = "config/prompt_template.yaml"
 
     dataset = ShoesImageDataset(root=ROOT_PATH,
+                                model=model,
                                 preprocess=preprocess,
-
                                 meta_info_path=meta_info_path,
+                                device=device,
                                 verbose=True)
 
     dataloader = DataLoader(dataset=dataset,  batch_size=16, num_workers=1)
@@ -48,7 +51,6 @@ if __name__=='__main__':
             0., 0., 0.,0., 0., 0.,0., 0., 0.
 
         for i, prod_id, precomp_image, bid, cid, hid, nid in enumerate(dataloader):
-
             precomp_image = precomp_image.to(device)
             target_brand = bid.to(device)
             target_color = cid.to(device)
@@ -72,7 +74,6 @@ if __name__=='__main__':
             acc1, acc5 = accuracy(logits, target_hightop, topk=(1, 5))
             hightop_top1 += acc1
             hightop_top5 += acc5
-
 
             n += images.size(0)
 
