@@ -20,7 +20,7 @@ if __name__=='__main__':
     print_clip_info(model)
 
     ROOT_PATH = "converse dataset"
-    meta_info_path = "example.csv"
+    meta_info_path = "legacy/example.csv"
     prompt_path = "config/prompt_template.yaml"
 
     dataset = ShoesImageDataset(root=ROOT_PATH,
