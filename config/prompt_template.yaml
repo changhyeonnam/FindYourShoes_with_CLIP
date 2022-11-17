@@ -20,6 +20,5 @@ hightop:
 
 zeroshot:
     - 'A photo of the {} shoes. Brand is {}, color is {}, hightop is {}top.'
-    - 'A photo of a {} sneakers. Brand is {}, color is {}, hightop is {}top.'
-    - 'A clean photo of the {} sneakers. Brand is {}, color is {}, hightop is {}top.'
-    - 'A clean photo of the {} shoes. Brand is {}, color is {}, hightop is {}top.'
+    - 'Brand is {}. A photo of a {} sneakers. Color is {}. hightop is {}top.'
+    - 'Brand is {}, color is {}, hightop is {}top. A photo of the {} sneakers. '
