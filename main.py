@@ -31,7 +31,7 @@ def main(root_path, meta_info_path, prompt_path):
                                 meta_info_df=meta_info_df,
                                 verbose=True)
 
-    dataloader = DataLoader(dataset=dataset, batch_size=16, num_workers=1)
+    dataloader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=1)
 
     # get dictionary about shoes.
     name_dict, brand_dict, color_dict, hightop_dict, meta_dict = dataset.get_dict()
@@ -50,7 +50,7 @@ def main(root_path, meta_info_path, prompt_path):
     name_weights, brand_weights, color_weights, hightop_weights = text_precompute.get_precomputed_text()
 
     with torch.no_grad():
-        brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, hightop_top1, hightop_top5, zeroshot_top1, total_num = \
+        brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, hightop_top1, hightop_top5, zeroshot_correct_count, total_num = \
             0., 0., 0., 0., 0., 0., 0., 0., 0., 0.
 
         for i, (prod_id, preproc_image, bid, cid, hid) in enumerate(tqdm(dataloader, total=len(dataloader))):
@@ -71,7 +71,7 @@ def main(root_path, meta_info_path, prompt_path):
             brand_top1 += acc1
             brand_top5 += acc5
 
-            # Secondly zeroshot with color
+            # Second zeroshot with color
             logits = (100.0 * image_features @ color_weights)
             top1k_color_idx = logits.topk(1, 1, True, True)[1].t().flatten().tolist()
             top1k_color_name = [color_inv_dict[idx] for idx in top1k_color_idx]
@@ -79,7 +79,7 @@ def main(root_path, meta_info_path, prompt_path):
             color_top1 += acc1
             color_top5 += acc5
 
-            # Thirdly zeroshot with hightop
+            # Third zeroshot with hightop
             logits = (100.0 * image_features @ hightop_weights)
             top1k_hightop_idx = logits.topk(1, 1, True, True)[1].t().flatten().tolist()
             top1k_hightop_name = [hightop_inv_dict[idx] for idx in top1k_hightop_idx]
@@ -93,29 +93,30 @@ def main(root_path, meta_info_path, prompt_path):
             product_lists = find_filtered_prod(meta_info_df, top1k_brand_name,
                                                top1k_color_name, top1k_hightop_name)
 
+            # Last zeroshot with filtered name
             correct_count = 0
-            for prod_list, target in zip(product_lists, target_name):
+            for img_idx, prod_list, target in zip(range(image_features.size(0)),product_lists, target_name):
                 if name_inv_dict[target] not in prod_list:
                     continue
                 else:
                     tar_name = name_inv_dict[target]
                 target_idx = torch.LongTensor([prod_list.index(tar_name)]).to(device)
-                zeroshot_weights = text_precompute.compute_prompt_name(prod_list)
-                logits = (100.0 * image_features @ zeroshot_weights)
-                print(logits.shape)
-                print(prod_list)
-                pred = logits.topk(1, 1, True, True)[1].t().flatten()
+                zeroshot_weight = text_precompute.compute_prompt_name(prod_list)
+                image_feature = image_features[img_idx]
+                logits = (100.0 * image_feature @ zeroshot_weight)
+                pred = logits.topk(1, 0, True, True)[1].t().flatten().item()
                 if pred == target_idx:
                     correct_count += 1
             acc1 = correct_count/preproc_image.size(0)
-            zeroshot_top1 += acc1
+            print(f'{i+1}th batch Zeroshot performance: {acc1*100:.2f}')
+            zeroshot_correct_count+=correct_count
 
             total_num += preproc_image.size(0)
 
         print_acc('brand', total_num, brand_top1, brand_top5)
         print_acc('color', total_num, color_top1, color_top5)
         print_acc('hightop', total_num, hightop_top1, hightop_top5)
-        print_acc('zeroshot', total_num, zeroshot_top1)
+        print_acc('zeroshot', total_num, zeroshot_correct_count)
 
 
 if __name__ == '__main__':
