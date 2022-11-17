@@ -39,6 +39,23 @@ class TextPreCompute:
     def get_precomputed_text(self):
         return self.name_weights, self.brand_weights, self.color_weights, self.hightop_weights
 
+    def compute_prompt_name(self, classnames):
+        templates = self.prompt_dict['name']
+        device = self.device
+        model = self.model
+        with torch.no_grad():
+            encoded_text_weights = []
+            for classname in classnames:
+                texts = [template.format(classname) for template in templates]  # format with class
+                texts = clip.tokenize(texts).to(device)  # tokenize
+                class_embeddings = model.encode_text(texts)  # embed with text encoder
+                class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
+                class_embedding = class_embeddings.mean(dim=0)
+                class_embedding /= class_embedding.norm()
+                encoded_text_weights.append(class_embedding)
+            encoded_text_weights = torch.stack(encoded_text_weights, dim=1).to(device)
+        return encoded_text_weights
+
     def _print_prompt_template(self, prompt_dict):
         for k,v in prompt_dict.items():
             print(f'This is prompt templates of {k}')

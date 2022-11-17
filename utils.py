@@ -1,7 +1,17 @@
 import numpy as np
+import pandas as pd
 import torch
 import clip
 
+def find_filtered_prod(df, brands, colors, hightops):
+    product_lists = []
+    for brand,color,hightop in zip(brands,colors,hightops):
+        prod_list = df.loc[((df['brand']==brand) & (df['color'] == color) & (df['hightop'] == hightop)), 'name'].values.tolist()
+        product_lists.append(prod_list)
+    return product_lists
+
+def invert_dict(dt):
+    return {v: k for k, v in dt.items()}
 
 def print_clip_info(model):
     input_resolution = model.visual.input_resolution
@@ -29,14 +39,12 @@ def update_dict(dict: dict, key, value=None):
         else:
             dict[key] = value
 
-
 def update_dict_list(dt, key, value):
     if key in dt:
         dt[key].append(value)
     else:
         dt[key] = []
         dt[key].append(value)
-
 
 def update_dict_num(dt, key):
     if key in dt:

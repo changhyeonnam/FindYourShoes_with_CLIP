@@ -21,7 +21,7 @@ class ImageAnnotation:
 class ShoesImageDataset(Dataset):
     def __init__(self,
                 root:str,
-                meta_info_path:str,
+                meta_info_df:pd.DataFrame,
                 preprocess,
                 verbose: bool=True
                 ) ->None:
@@ -29,7 +29,7 @@ class ShoesImageDataset(Dataset):
         self._root = root
         self._preprocess = preprocess
         self.verbose = verbose
-        self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict = self._load_meta_info(meta_info_path)
+        self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict = self._load_meta_info(meta_info_df)
         if self.verbose:
             print(f'\n{"*" * 10} Preprocessing about Images is Started. {"*" * 10}\n')
             print(f'Length of name_dict: {len(self.name_dict)}\n'
@@ -45,19 +45,18 @@ class ShoesImageDataset(Dataset):
 
     def _line_mapper(self, line):
 
-        prod_id, preproc_image = line
+        product_id, preproc_image = line
 
-        meta_info = self.meta_dict[prod_id]
-        brand,color,hightop,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.name
-        bid,cid,hid,nid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.name_dict[name]
+        meta_info = self.meta_dict[product_id]
+        brand,color,hightop = meta_info.brand, meta_info.color, meta_info.hightop
+        bid,cid,hid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop]
 
-        return prod_id, preproc_image, bid, cid, hid, nid
+        return product_id, preproc_image, bid, cid, hid
 
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
 
-    def _load_meta_info(self,path):
-        df = pd.read_csv(path)
+    def _load_meta_info(self,df):
         df_dicts = df.to_dict(orient='records')
         name_dict, brand_dict, color_dict, hightop_dict, meta_dict={},{},{},{},{}
         for dt in df_dicts:
