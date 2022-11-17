@@ -4,13 +4,14 @@ import torch
 import clip
 from tqdm import tqdm
 from pkg_resources import packaging
-from utils import print_clip_info, find_filtered_prod,invert_dict
+from utils import print_clip_info, find_filtered_prod, invert_dict
 from data import ShoesImageDataset
 from prompt_compute import TextPreCompute
-from metric import accuracy,print_acc
+from metric import accuracy, print_acc
 from torch.utils.data import DataLoader
 
-def main(root_path,meta_info_path,prompt_path):
+
+def main(root_path, meta_info_path, prompt_path):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # print available models
@@ -34,16 +35,16 @@ def main(root_path,meta_info_path,prompt_path):
 
     # get dictionary about shoes.
     name_dict, brand_dict, color_dict, hightop_dict, meta_dict = dataset.get_dict()
-    name_inv_dict, brand_inv_dict, color_inv_dict, hightop_inv_dict = invert_dict(name_dict),invert_dict(brand_dict), \
+    name_inv_dict, brand_inv_dict, color_inv_dict, hightop_inv_dict = invert_dict(name_dict), invert_dict(brand_dict), \
                                                                       invert_dict(color_dict), invert_dict(hightop_dict)
     # precompute text and prompt template with clip moodel.
     text_precompute = TextPreCompute(model,
-                                  device,
-                                  prompt_path,
-                                  name_dict,
-                                  brand_dict,
-                                  color_dict,
-                                  hightop_dict)
+                                     device,
+                                     prompt_path,
+                                     name_dict,
+                                     brand_dict,
+                                     color_dict,
+                                     hightop_dict)
 
     # get precomputed embeddings from TextPreCompute
     name_weights, brand_weights, color_weights, hightop_weights = text_precompute.get_precomputed_text()
@@ -86,45 +87,40 @@ def main(root_path,meta_info_path,prompt_path):
             hightop_top1 += acc1
             hightop_top5 += acc5
 
-            # # Lastly zeroshot with name --> This is temporary code. We will fix with using filtering table.
-            # logits = (100.0 * image_features @ name_weights)
-            # acc1, acc5 = accuracy(logits, target_name, topk=(1, 5))
-            # name_top1 += acc1
-            # name_top5 += acc5
-
             # We want to find name using brand, color, hightop info which is obtained from above.
             # We can list of name using multiple filter in pandas.
-            # product_list shape : batch_size x N_i (N_i is number of filtered products for each sample)
+            # product_lists shape : batch_size x N_i (N_i is number of filtered products for each sample)
             product_lists = find_filtered_prod(meta_info_df, top1k_brand_name,
-                                                                top1k_color_name, top1k_hightop_name)
+                                               top1k_color_name, top1k_hightop_name)
 
-            for prod_list, target in zip(product_lists,target_name):
+            correct_count = 0
+            for prod_list, target in zip(product_lists, target_name):
                 if name_inv_dict[target] not in prod_list:
                     continue
                 else:
                     tar_name = name_inv_dict[target]
-                target_idx = torch.Tensor(prod_list.index(tar_name))
+                target_idx = torch.LongTensor([prod_list.index(tar_name)]).to(device)
                 zeroshot_weights = text_precompute.compute_prompt_name(prod_list)
                 logits = (100.0 * image_features @ zeroshot_weights)
                 print(logits.shape)
-                print(target_idx.shape)
-                acc1 = accuracy(logits, target_idx, topk=(1,))[0]
-                zeroshot_top1 += acc1
+                print(prod_list)
+                pred = logits.topk(1, 1, True, True)[1].t().flatten()
+                if pred == target_idx:
+                    correct_count += 1
+            acc1 = correct_count/preproc_image.size(0)
+            zeroshot_top1 += acc1
 
             total_num += preproc_image.size(0)
 
         print_acc('brand', total_num, brand_top1, brand_top5)
         print_acc('color', total_num, color_top1, color_top5)
         print_acc('hightop', total_num, hightop_top1, hightop_top5)
-        print_acc('zeroshot', total_num,zeroshot_top1)
+        print_acc('zeroshot', total_num, zeroshot_top1)
 
-if __name__=='__main__':
 
+if __name__ == '__main__':
     root_path = "converse dataset"
     meta_info_path = "meta_info.csv"
     prompt_path = "config/prompt_template.yaml"
 
-    main(root_path,meta_info_path,prompt_path)
-
-
-
+    main(root_path, meta_info_path, prompt_path)
