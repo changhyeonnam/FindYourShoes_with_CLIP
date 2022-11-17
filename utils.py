@@ -7,7 +7,7 @@ def find_filtered_prod(df, brands, colors, hightops):
     product_lists = []
     for brand,color,hightop in zip(brands,colors,hightops):
         prod_list = df.loc[((df['brand']==brand) & (df['color'] == color) & (df['hightop'] == hightop)), 'name'].values.tolist()
-        product_lists.append(prod_list)
+        product_lists.append({'prod_list':prod_list,'brand':brand,'color':color,'hightop':hightop})
     return product_lists
 
 def invert_dict(dt):

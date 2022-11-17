@@ -31,7 +31,7 @@ def main(root_path, meta_info_path, prompt_path):
                                 meta_info_df=meta_info_df,
                                 verbose=True)
 
-    dataloader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=1)
+    dataloader = DataLoader(dataset=dataset, batch_size=32, shuffle=False, num_workers=1)
 
     # get dictionary about shoes.
     name_dict, brand_dict, color_dict, hightop_dict, meta_dict = dataset.get_dict()
@@ -58,7 +58,7 @@ def main(root_path, meta_info_path, prompt_path):
             target_brand = bid.to(device)
             target_color = cid.to(device)
             target_hightop = hid.to(device)
-            target_name = prod_id.to(device).tolist()
+            target_name = prod_id.to(device)
 
             image_features = model.encode_image(preproc_image)
             image_features /= image_features.norm(dim=-1, keepdim=True)
@@ -87,6 +87,13 @@ def main(root_path, meta_info_path, prompt_path):
             hightop_top1 += acc1
             hightop_top5 += acc5
 
+            # Lastly zeroshot with name --> This is temporary code. We will fix with using filtering table.
+            logits = (100.0 * image_features @ name_weights)
+            acc1, acc5 = accuracy(logits, target_name, topk=(1, 5))
+            name_top1 += acc1
+            name_top5 += acc5
+
+            target_name = target_name.tolist()
             # We want to find name using brand, color, hightop info which is obtained from above.
             # We can list of name using multiple filter in pandas.
             # product_lists shape : batch_size x N_i (N_i is number of filtered products for each sample)
@@ -95,13 +102,17 @@ def main(root_path, meta_info_path, prompt_path):
 
             # Last zeroshot with filtered name
             correct_count = 0
-            for img_idx, prod_list, target in zip(range(image_features.size(0)),product_lists, target_name):
+            for img_idx, prod_list_meta, target in zip(range(image_features.size(0)),product_lists, target_name):
+                prod_list,brand,color,hightop = prod_list_meta['prod_list'],\
+                                                prod_list_meta['brand'],\
+                                                prod_list_meta['color'],\
+                                                prod_list_meta['hightop']
                 if name_inv_dict[target] not in prod_list:
                     continue
                 else:
                     tar_name = name_inv_dict[target]
                 target_idx = torch.LongTensor([prod_list.index(tar_name)]).to(device)
-                zeroshot_weight = text_precompute.compute_prompt_name(prod_list)
+                zeroshot_weight = text_precompute.compute_prompt_name(prod_list,brand,color,hightop)
                 image_feature = image_features[img_idx]
                 logits = (100.0 * image_feature @ zeroshot_weight)
                 pred = logits.topk(1, 0, True, True)[1].t().flatten().item()
@@ -116,6 +127,7 @@ def main(root_path, meta_info_path, prompt_path):
         print_acc('brand', total_num, brand_top1, brand_top5)
         print_acc('color', total_num, color_top1, color_top5)
         print_acc('hightop', total_num, hightop_top1, hightop_top5)
+        print_acc('name_zeroshot', total_num, name_top1, name_top5)
         print_acc('zeroshot', total_num, zeroshot_correct_count)
 
 

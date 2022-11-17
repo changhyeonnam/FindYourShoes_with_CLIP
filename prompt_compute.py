@@ -39,14 +39,14 @@ class TextPreCompute:
     def get_precomputed_text(self):
         return self.name_weights, self.brand_weights, self.color_weights, self.hightop_weights
 
-    def compute_prompt_name(self, classnames):
-        templates = self.prompt_dict['name']
+    def compute_prompt_name(self, classnames,brand,color,hightop):
+        templates = self.prompt_dict['zeroshot']
         device = self.device
         model = self.model
         with torch.no_grad():
             encoded_text_weights = []
             for classname in classnames:
-                texts = [template.format(classname) for template in templates]  # format with class
+                texts = [template.format(classname,brand,color,hightop) for template in templates]  # format with class
                 texts = clip.tokenize(texts).to(device)  # tokenize
                 class_embeddings = model.encode_text(texts)  # embed with text encoder
                 class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
