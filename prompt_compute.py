@@ -46,7 +46,13 @@ class TextPreCompute:
         with torch.no_grad():
             encoded_text_weights = []
             for classname in classnames:
-                texts = [template.format(classname,brand,color,hightop) for template in templates]  # format with class
+                texts = []
+                for i, template in enumerate(templates):
+                    if i == 0 or i==2:
+                        texts.append(template.format(classname, brand, color, hightop))
+                    elif i==1 or i==3:
+                        texts.append(template.format(brand,color,classname,hightop))
+
                 texts = clip.tokenize(texts).to(device)  # tokenize
                 class_embeddings = model.encode_text(texts)  # embed with text encoder
                 class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
