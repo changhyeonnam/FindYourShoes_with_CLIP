@@ -2,3 +2,5 @@
 /dataset
 /converse dataset
 /venv
+/.idea/
+/__pycache__/

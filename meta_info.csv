@@ -1,22 +1,22 @@
-name,brand,color,hightop
-converse high black,converse,black,high
-converse high deep bordeaux,converse,burgundy,high
-converse high midnight clover,converse,green,high
-converse high parchment,converse,white,high
-converse high rush blue,converse,blue,high
-converse high sunflower,converse,yellow,high
-converse high white,converse,white,high
-converse low black,converse,black,low
-converse low deep bordeaux,converse,burgundy,low
-converse low midnight clover,converse,green,low
-converse low parchment,converse,white,low
-converse low rush blue,converse,blue,low
-converse low sunflower,converse,yellow,low
-converse low white,converse,white,low
-converse onestar black,converse,black,low
-converse onestar white,converse,white,low
-converse run star hike hi black,converse,black,high
-converse run star hike high white,converse,white,high
-converse run star hike low black,converse,black,low
-converse run star hike low rush blue,converse,blue,low
-converse run star hike low white,converse,white,low
+name,brand,color,hightop,sole
+converse high black,converse,black,high,plain sole
+converse high deep bordeaux,converse,burgundy,high,plain sole
+converse high midnight clover,converse,green,high,plain sole
+converse high parchment,converse,white,high,plain sole
+converse high rush blue,converse,blue,high,plain sole
+converse high sunflower,converse,yellow,high,plain sole
+converse high white,converse,white,high,plain sole
+converse low black,converse,black,low,plain sole
+converse low deep bordeaux,converse,burgundy,low,plain sole
+converse low midnight clover,converse,green,low,plain sole
+converse low parchment,converse,white,low,plain sole
+converse low rush blue,converse,blue,low,plain sole
+converse low sunflower,converse,yellow,low,plain sole
+converse low white,converse,white,low,plain sole
+converse onestar black,converse,black,low,plain sole
+converse onestar white,converse,white,low,plain sole
+converse run star hike hi black,converse,black,high,plain sole with jagged rubber
+converse run star hike high white,converse,white,high,plain sole with jagged rubber
+converse run star hike low black,converse,black,low,plain sole with jagged rubber
+converse run star hike low rush blue,converse,blue,low,plain sole with jagged rubber
+converse run star hike low white,converse,white,low,plain sole with jagged rubber

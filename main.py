@@ -9,6 +9,8 @@ from data import ShoesImageDataset
 from prompt_compute import TextPreCompute
 from metric import accuracy, print_acc
 from torch.utils.data import DataLoader
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def main(root_path, meta_info_path, prompt_path):
@@ -18,7 +20,7 @@ def main(root_path, meta_info_path, prompt_path):
     print('This is available models: ', clip.available_models())
 
     # load model
-    model, preprocess = clip.load("ViT-B/32")
+    model, preprocess = clip.load('ViT-L/14@336px')
 
     # print model information
     print_clip_info(model)
@@ -34,9 +36,9 @@ def main(root_path, meta_info_path, prompt_path):
     dataloader = DataLoader(dataset=dataset, batch_size=32, shuffle=False, num_workers=1)
 
     # get dictionary about shoes.
-    name_dict, brand_dict, color_dict, hightop_dict, meta_dict = dataset.get_dict()
-    name_inv_dict, brand_inv_dict, color_inv_dict, hightop_inv_dict = invert_dict(name_dict), invert_dict(brand_dict), \
-                                                                      invert_dict(color_dict), invert_dict(hightop_dict)
+    name_dict, brand_dict, color_dict, hightop_dict, sole_dict, meta_dict = dataset.get_dict()
+    name_inv_dict, brand_inv_dict, color_inv_dict, hightop_inv_dict, sole_inv_dict = invert_dict(name_dict), invert_dict(brand_dict), \
+                                                                      invert_dict(color_dict), invert_dict(hightop_dict), invert_dict(sole_dict)
     # precompute text and prompt template with clip moodel.
     text_precompute = TextPreCompute(model,
                                      device,
@@ -44,20 +46,23 @@ def main(root_path, meta_info_path, prompt_path):
                                      name_dict,
                                      brand_dict,
                                      color_dict,
-                                     hightop_dict)
+                                     hightop_dict,
+                                     sole_dict)
 
     # get precomputed embeddings from TextPreCompute
-    name_weights, brand_weights, color_weights, hightop_weights = text_precompute.get_precomputed_text()
+    name_weights, brand_weights, color_weights, hightop_weights, sole_weights = text_precompute.get_precomputed_text()
 
     with torch.no_grad():
-        brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, hightop_top1, hightop_top5, zeroshot_correct_count, total_num = \
-            0., 0., 0., 0., 0., 0., 0., 0., 0., 0.
+        brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, \
+        hightop_top1, hightop_top5, sole_top1, sole_top5, zeroshot_correct_count, total_num = \
+            0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,0.,0.
 
-        for i, (prod_id, preproc_image, bid, cid, hid) in enumerate(tqdm(dataloader, total=len(dataloader))):
+        for i, (prod_id, preproc_image, bid, cid, hid, sid) in enumerate(tqdm(dataloader, total=len(dataloader))):
             preproc_image = preproc_image.to(device)
             target_brand = bid.to(device)
             target_color = cid.to(device)
             target_hightop = hid.to(device)
+            target_sole = sid.to(device)
             target_name = prod_id.to(device)
 
             image_features = model.encode_image(preproc_image)
@@ -87,6 +92,14 @@ def main(root_path, meta_info_path, prompt_path):
             hightop_top1 += acc1
             hightop_top5 += acc5
 
+            #Forth zeroshot with sole
+            logits = (100.0 * image_features @ sole_weights)
+            top1k_sole_idx = logits.topk(1, 1, True, True)[1].t().flatten().tolist()
+            top1k_sole_name = [sole_inv_dict[idx] for idx in top1k_sole_idx]
+            acc1, acc5 = accuracy(logits, target_sole, topk=(1, 2))
+            sole_top1 += acc1
+            sole_top5 += acc5
+
             # Lastly zeroshot with name --> This is temporary code. We will fix with using filtering table.
             logits = (100.0 * image_features @ name_weights)
             acc1, acc5 = accuracy(logits, target_name, topk=(1, 5))
@@ -98,16 +111,18 @@ def main(root_path, meta_info_path, prompt_path):
             # We can list of name using multiple filter in pandas.
             # product_lists shape : batch_size x N_i (N_i is number of filtered products for each sample)
             product_lists = find_filtered_prod(meta_info_df, top1k_brand_name,
-                                               top1k_color_name, top1k_hightop_name)
+                                               top1k_color_name, top1k_hightop_name, top1k_sole_name)
 
             # Last zeroshot with filtered name
             correct_count = 0
             prod_not_classified_list = []
             for img_idx, prod_list_meta, target in zip(range(image_features.size(0)),product_lists, target_name):
-                prod_list,brand,color,hightop = prod_list_meta['prod_list'],\
+
+                prod_list,brand,color,hightop= prod_list_meta['prod_list'],\
                                                 prod_list_meta['brand'],\
                                                 prod_list_meta['color'],\
-                                                prod_list_meta['hightop']
+                                                prod_list_meta['hightop'],\
+                                                # prod_list_meta['sole']
                 # get name of target
                 tar_name = name_inv_dict[target]
 
@@ -137,6 +152,7 @@ def main(root_path, meta_info_path, prompt_path):
         print_acc('brand', total_num, brand_top1, brand_top5)
         print_acc('color', total_num, color_top1, color_top5)
         print_acc('hightop', total_num, hightop_top1, hightop_top5)
+        print_acc('sole', total_num, sole_top1, sole_top5)
         print_acc('name_zeroshot', total_num, name_top1, name_top5)
         print_acc('zeroshot', total_num, zeroshot_correct_count)
 

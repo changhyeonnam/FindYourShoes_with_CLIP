@@ -15,6 +15,7 @@ class ImageAnnotation:
     brand:str
     color:str
     hightop:str
+    sole:str
     name:str
 
 
@@ -29,14 +30,15 @@ class ShoesImageDataset(Dataset):
         self._root = root
         self._preprocess = preprocess
         self.verbose = verbose
-        self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict = self._load_meta_info(meta_info_df)
+        self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.sole_dict, self.meta_dict = self._load_meta_info(meta_info_df)
         if self.verbose:
             print(f'\n{"*" * 10} Preprocessing about Images is Started. {"*" * 10}\n')
-            print(f'Length of name_dict: {len(self.name_dict)}\n'
-                  f'Length of brand_dict: {len(self.brand_dict)}\n'
-                  f'Length of color_dict: {len(self.color_dict)}\n'
-                  f'Length of hightop_dict: {len(self.hightop_dict)}\n'
-                  f'Length of meta_dict: {len(self.meta_dict)}')
+            print(f'# class of name: {len(self.name_dict)}\n'
+                  f'# class of brand: {len(self.brand_dict)}\n'
+                  f'# class of color: {len(self.color_dict)}\n'
+                  f'# class of hightop: {len(self.hightop_dict)}\n'
+                  f'# class of sole: {len(self.sole_dict)}\n'
+                  f'# class of meta: {len(self.meta_dict)}')
 
         self.preproc_image_list = self._parse_image_files(root=self._root, name_dict=self.name_dict)
 
@@ -48,34 +50,36 @@ class ShoesImageDataset(Dataset):
         product_id, preproc_image = line
 
         meta_info = self.meta_dict[product_id]
-        brand,color,hightop = meta_info.brand, meta_info.color, meta_info.hightop
-        bid,cid,hid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop]
+        brand,color,hightop,sole = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.sole
+        bid,cid,hid,sid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.sole_dict[sole]
 
-        return product_id, preproc_image, bid, cid, hid
+        return product_id, preproc_image, bid, cid, hid,sid
 
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
 
     def _load_meta_info(self,df):
         df_dicts = df.to_dict(orient='records')
-        name_dict, brand_dict, color_dict, hightop_dict, meta_dict={},{},{},{},{}
+        name_dict, brand_dict, color_dict, hightop_dict, sole_dict, meta_dict={},{},{},{},{},{}
         for dt in df_dicts:
-            name,brand,color,hightop = dt['name'], dt['brand'], dt['color'], dt['hightop']
+            name,brand,color,hightop,sole = dt['name'], dt['brand'], dt['color'], dt['hightop'], dt['sole']
             meta_info = ImageAnnotation(
                 brand=brand,
                 color=color,
                 hightop=hightop,
+                sole=sole,
                 name=name
             )
             update_dict(dict=name_dict,key=name)
             update_dict(dict=brand_dict,key=brand)
             update_dict(dict=color_dict,key=color)
             update_dict(dict=hightop_dict,key=hightop)
+            update_dict(dict=sole_dict,key=sole)
             update_dict(dict=meta_dict,key=name_dict[name],value=meta_info)
-        return name_dict, brand_dict, color_dict, hightop_dict, meta_dict
+        return name_dict, brand_dict, color_dict, hightop_dict, sole_dict, meta_dict
 
     def get_dict(self):
-        return self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.meta_dict
+        return self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.sole_dict,self.meta_dict
 
     def _parse_image_files(self,root:str, name_dict:dict):
         dir_list = os.listdir(path=root)

@@ -3,7 +3,7 @@ import pandas as pd
 import torch
 import clip
 
-def find_filtered_prod(df, brands, colors, hightops):
+def find_filtered_prod(df, brands, colors, hightops,soles):
     product_lists = []
     for brand,color,hightop in zip(brands,colors,hightops):
         prod_list = df.loc[((df['brand']==brand) & (df['color'] == color) & (df['hightop'] == hightop)), 'name'].values.tolist()

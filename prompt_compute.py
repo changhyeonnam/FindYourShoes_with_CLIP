@@ -14,6 +14,7 @@ class TextPreCompute:
                  brand_dict:dict,
                  color_dict:dict,
                  hightop_dict:dict,
+                 sole_dict:dict,
                  verbose = True
                  ):
 
@@ -23,6 +24,7 @@ class TextPreCompute:
         self.brand_classes = brand_dict.keys()
         self.color_classes = color_dict.keys()
         self.hightop_classes = hightop_dict.keys()
+        self.sole_classes = sole_dict.keys()
         self.prompt_dict = self._load_prompt_template(prompt_path)
 
         if verbose:
@@ -33,11 +35,12 @@ class TextPreCompute:
         self.brand_weights = self._precompute_prompt_text(self.brand_classes, self.prompt_dict['brand'], model, device)
         self.color_weights = self._precompute_prompt_text(self.color_classes, self.prompt_dict['color'], model, device)
         self.hightop_weights = self._precompute_prompt_text(self.hightop_classes, self.prompt_dict['hightop'], model, device)
+        self.sole_weights = self._precompute_prompt_text(self.sole_classes, self.prompt_dict['sole'], model, device)
         if verbose:
             print(f'\n{"*"*10} Preprocessing about prompt template is Completed. {"*"*10}\n')
 
     def get_precomputed_text(self):
-        return self.name_weights, self.brand_weights, self.color_weights, self.hightop_weights
+        return self.name_weights, self.brand_weights, self.color_weights, self.hightop_weights, self.sole_weights
 
     def compute_prompt_name(self, classnames,brand,color,hightop):
         templates = self.prompt_dict['zeroshot']
@@ -50,11 +53,13 @@ class TextPreCompute:
                 for i, template in enumerate(templates):
                     if i == 0:
                         texts.append(template.format(classname,brand,color,hightop))
+                    # elif i==1:
+                    #     texts.append(template.format(brand, classname,color,hightop,sole))
                     elif i==1:
-                        texts.append(template.format(brand, classname,color,hightop))
-                    elif i==2:
                         texts.append(template.format(brand,color,classname,hightop))
-                    elif i==3:
+                    # elif i==3:
+                    #     texts.append(template.format(brand,color,hightop,classname,sole))
+                    elif i==2:
                         texts.append(template.format(brand,color,hightop,classname))
 
 

@@ -4,23 +4,29 @@ name:
     - 'a photo of the {} shoes.'
 
 brand:
-    - 'shoes made by the {}.'
-    - '{} is brand of this shoes.'
-    - 'a photo of the {} shoes.'
+    - 'a photo of the {} brand shoes.'
+    - 'a photo of a {} brand sneakers.'
+    - 'a bright photo of the {} brand sneakers.'
 
 color:
     - 'a photo of the {} color shoes.'
-    - 'a photo of a {} shoes.'
-    - 'Color of shoes is {}'
+    - 'a photo of a {} color sneakers.'
+    - 'a bright photo of the {} color sneakers.'
+
 
 hightop:
     - 'a photo of the {}top shoes.'
     - 'a photo of a {}top sneakers.'
     - 'a bright photo of the {}top sneakers.'
 
+sole:
+    - 'a photo of the shoes of sole is {}'
+    - 'a photo of a sneakers of sole is {}'
+    - 'a bright photo of the sneakers of sole is {}'
+
 zeroshot:
     - 'A photo of the {} shoes, brand is {}, color is {}, hightop is {}top.'
-    - 'Brand is {}, a photo of a {} shoes, color is {}, hightop is {}top.'
     - 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top.'
-    - 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes. '
+    - 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes'
+
 
