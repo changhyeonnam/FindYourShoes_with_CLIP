@@ -102,15 +102,20 @@ def main(root_path, meta_info_path, prompt_path):
 
             # Last zeroshot with filtered name
             correct_count = 0
+            prod_not_classified_list = []
             for img_idx, prod_list_meta, target in zip(range(image_features.size(0)),product_lists, target_name):
                 prod_list,brand,color,hightop = prod_list_meta['prod_list'],\
                                                 prod_list_meta['brand'],\
                                                 prod_list_meta['color'],\
                                                 prod_list_meta['hightop']
-                if name_inv_dict[target] not in prod_list:
+                # get name of target
+                tar_name = name_inv_dict[target]
+
+                # brand, color, hightop condition are wrong.
+                if tar_name not in prod_list:
+                    prod_not_classified_list.append(tar_name)
                     continue
-                else:
-                    tar_name = name_inv_dict[target]
+
                 target_idx = torch.LongTensor([prod_list.index(tar_name)]).to(device)
                 zeroshot_weight = text_precompute.compute_prompt_name(prod_list,brand,color,hightop)
                 image_feature = image_features[img_idx]
@@ -118,8 +123,13 @@ def main(root_path, meta_info_path, prompt_path):
                 pred = logits.topk(1, 0, True, True)[1].t().flatten().item()
                 if pred == target_idx:
                     correct_count += 1
+                else:
+                    prod_not_classified_list.append(tar_name)
+
             acc1 = correct_count/preproc_image.size(0)
             print(f'{i+1}th batch Zeroshot performance: {acc1*100:.2f}')
+            print(f'Classifier doesn\'t work for items in this batch: {prod_not_classified_list}')
+
             zeroshot_correct_count+=correct_count
 
             total_num += preproc_image.size(0)

@@ -19,8 +19,8 @@ hightop:
     - 'a bright photo of the {}top sneakers.'
 
 zeroshot:
-    - 'A photo of the {} shoes. Brand is {}, color is {}, hightop is {}top.'
-    - 'Brand is {}, color is {}. A photo of a {} shoes, hightop is {}top.'
-    - 'A clear photo of the {} shoes. Brand is {}, color is {}, hightop is {}top.'
-    - 'Brand is {}, color is {}. A clear photo of a {} shoes, hightop is {}top.'
+    - 'A photo of the {} shoes, brand is {}, color is {}, hightop is {}top.'
+    - 'Brand is {}, a photo of a {} shoes, color is {}, hightop is {}top.'
+    - 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top.'
+    - 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes. '
 

@@ -48,10 +48,15 @@ class TextPreCompute:
             for classname in classnames:
                 texts = []
                 for i, template in enumerate(templates):
-                    if i == 0 or i==2:
-                        texts.append(template.format(classname, brand, color, hightop))
-                    elif i==1 or i==3:
+                    if i == 0:
+                        texts.append(template.format(classname,brand,color,hightop))
+                    elif i==1:
+                        texts.append(template.format(brand, classname,color,hightop))
+                    elif i==2:
                         texts.append(template.format(brand,color,classname,hightop))
+                    elif i==3:
+                        texts.append(template.format(brand,color,hightop,classname))
+
 
                 texts = clip.tokenize(texts).to(device)  # tokenize
                 class_embeddings = model.encode_text(texts)  # embed with text encoder
