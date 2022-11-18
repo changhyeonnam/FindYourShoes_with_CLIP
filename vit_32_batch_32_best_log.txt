@@ -1,0 +1,130 @@
+This is available models:  ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
+Model parameters: 151,277,313
+Input resolution: 224
+Context length: 77
+Vocab size: 49408
+
+********** Preprocessing about Images is Started. **********
+
+# class of name: 21
+# class of brand: 1
+# class of color: 6
+# class of hightop: 2
+# class of sole: 2
+# class of meta: 21
+ 94%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎       | 17/18 [00:16<00:00,  1.23it/s]/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/PIL/Image.py:959: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 18/18 [00:17<00:00,  1.03it/s]
+# converse onestar white : 31
+# converse low rush blue : 35
+# converse low parchment : 94
+# converse onestar black : 70
+# converse high sunflower : 71
+# converse low deep bordeaux : 44
+# converse high parchment : 50
+# converse high rush blue : 101
+# converse high midnight clover : 108
+# converse low sunflower : 60
+# converse low black : 51
+# converse high white : 64
+# converse low midnight clover : 59
+# converse high deep bordeaux : 57
+# converse high black : 50
+# converse low white : 54
+
+********** Preprocessing about images is Completed. **********
+
+
+********** Preprocessing about prompt template is Started. **********
+
+This is prompt templates of name
+['a photo of the {} shoes.', 'a photo of a {} sneakers.', 'a photo of the {} shoes.']
+This is prompt templates of brand
+['a photo of the {} brand shoes.', 'a photo of a {} brand sneakers.', 'a bright photo of the {} brand sneakers.']
+This is prompt templates of color
+['a photo of the {} color shoes.', 'a photo of a {} color sneakers.', 'a bright photo of the {} color sneakers.']
+This is prompt templates of hightop
+['a photo of the {}top shoes.', 'a photo of a {}top sneakers.', 'a bright photo of the {}top sneakers.']
+This is prompt templates of sole
+['a photo of the shoes of sole is {}', 'a photo of a sneakers of sole is {}', 'a bright photo of the sneakers of sole is {}']
+This is prompt templates of zeroshot
+['A photo of the {} shoes, brand is {}, color is {}, hightop is {}top.', 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top.', 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes']
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:06<00:00,  3.14it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  1.91it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 6/6 [00:02<00:00,  2.49it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  2.58it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  2.18it/s]
+
+********** Preprocessing about prompt template is Completed. **********
+
+  0%|                                                                                                                                                    | 0/32 [00:00<?, ?it/s]1th batch Zeroshot performance: 75.00
+Classifier doesn't work for items in this batch: ['converse onestar white', 'converse onestar white', 'converse onestar white', 'converse onestar white', 'converse onestar white', 'converse onestar white', 'converse onestar white', 'converse onestar white']
+  3%|████▍                                                                                                                                       | 1/32 [00:55<28:39, 55.47s/it]2th batch Zeroshot performance: 96.88
+Classifier doesn't work for items in this batch: ['converse low rush blue']
+  6%|████████▊                                                                                                                                   | 2/32 [01:25<20:08, 40.27s/it]3th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['converse low parchment', 'converse low parchment']
+  9%|█████████████▏                                                                                                                              | 3/32 [02:20<22:50, 47.27s/it]4th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['converse low parchment', 'converse low parchment', 'converse low parchment']
+ 12%|█████████████████▌                                                                                                                          | 4/32 [03:22<24:45, 53.06s/it]5th batch Zeroshot performance: 75.00
+Classifier doesn't work for items in this batch: ['converse low parchment', 'converse low parchment', 'converse low parchment', 'converse low parchment', 'converse low parchment', 'converse low parchment', 'converse low parchment', 'converse low parchment']
+ 16%|█████████████████████▉                                                                                                                      | 5/32 [04:36<27:11, 60.43s/it]6th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['converse onestar black', 'converse onestar black']
+ 19%|██████████████████████████▎                                                                                                                 | 6/32 [05:36<26:07, 60.30s/it]7th batch Zeroshot performance: 84.38
+Classifier doesn't work for items in this batch: ['converse onestar black', 'converse onestar black', 'converse onestar black', 'converse onestar black', 'converse onestar black']
+ 22%|██████████████████████████████▋                                                                                                             | 7/32 [07:06<29:14, 70.19s/it]8th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['converse onestar black', 'converse high sunflower', 'converse high sunflower']
+ 25%|███████████████████████████████████                                                                                                         | 8/32 [07:45<24:03, 60.14s/it]9th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['converse high sunflower', 'converse high sunflower']
+ 28%|███████████████████████████████████████▍                                                                                                    | 9/32 [08:15<19:25, 50.67s/it]10th batch Zeroshot performance: 100.00
+Classifier doesn't work for items in this batch: []
+ 31%|███████████████████████████████████████████▍                                                                                               | 10/32 [08:46<16:20, 44.57s/it]11th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['converse high parchment', 'converse high parchment', 'converse high parchment']
+ 34%|███████████████████████████████████████████████▊                                                                                           | 11/32 [09:28<15:20, 43.82s/it]12th batch Zeroshot performance: 68.75
+Classifier doesn't work for items in this batch: ['converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment', 'converse high parchment']
+ 38%|████████████████████████████████████████████████████▏                                                                                      | 12/32 [10:22<15:40, 47.02s/it]13th batch Zeroshot performance: 96.88
+Classifier doesn't work for items in this batch: ['converse high rush blue']
+ 41%|████████████████████████████████████████████████████████▍                                                                                  | 13/32 [10:55<13:33, 42.80s/it]14th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['converse high rush blue', 'converse high rush blue']
+ 44%|████████████████████████████████████████████████████████████▊                                                                              | 14/32 [11:21<11:20, 37.82s/it]15th batch Zeroshot performance: 100.00
+Classifier doesn't work for items in this batch: []
+ 47%|█████████████████████████████████████████████████████████████████▏                                                                         | 15/32 [11:43<09:17, 32.77s/it]16th batch Zeroshot performance: 87.50
+Classifier doesn't work for items in this batch: ['converse high rush blue', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover']
+ 50%|█████████████████████████████████████████████████████████████████████▌                                                                     | 16/32 [12:03<07:47, 29.19s/it]17th batch Zeroshot performance: 87.50
+Classifier doesn't work for items in this batch: ['converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover']
+ 53%|█████████████████████████████████████████████████████████████████████████▊                                                                 | 17/32 [12:29<07:01, 28.10s/it]18th batch Zeroshot performance: 96.88
+Classifier doesn't work for items in this batch: ['converse high midnight clover']
+ 56%|██████████████████████████████████████████████████████████████████████████████▏                                                            | 18/32 [12:54<06:20, 27.21s/it]19th batch Zeroshot performance: 75.00
+Classifier doesn't work for items in this batch: ['converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover', 'converse high midnight clover']
+ 59%|██████████████████████████████████████████████████████████████████████████████████▌                                                        | 19/32 [13:16<05:32, 25.55s/it]20th batch Zeroshot performance: 96.88
+Classifier doesn't work for items in this batch: ['converse low sunflower']
+ 62%|██████████████████████████████████████████████████████████████████████████████████████▉                                                    | 20/32 [13:35<04:43, 23.64s/it]21th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['converse low sunflower', 'converse low black', 'converse low black']
+ 66%|███████████████████████████████████████████████████████████████████████████████████████████▏                                               | 21/32 [13:56<04:11, 22.88s/it]22th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['converse low black', 'converse low black']
+ 69%|███████████████████████████████████████████████████████████████████████████████████████████████▌                                           | 22/32 [14:31<04:25, 26.51s/it]23th batch Zeroshot performance: 81.25
+Classifier doesn't work for items in this batch: ['converse low black', 'converse low black', 'converse high white', 'converse high white', 'converse high white', 'converse high white']
+ 72%|███████████████████████████████████████████████████████████████████████████████████████████████████▉                                       | 23/32 [14:58<04:00, 26.77s/it]24th batch Zeroshot performance: 75.00
+Classifier doesn't work for items in this batch: ['converse high white', 'converse high white', 'converse high white', 'converse high white', 'converse high white', 'converse high white', 'converse high white', 'converse high white']
+ 75%|████████████████████████████████████████████████████████████████████████████████████████████████████████▎                                  | 24/32 [15:25<03:33, 26.66s/it]25th batch Zeroshot performance: 84.38
+Classifier doesn't work for items in this batch: ['converse high white', 'converse high white', 'converse high white', 'converse high white', 'converse low midnight clover']
+ 78%|████████████████████████████████████████████████████████████████████████████████████████████████████████████▌                              | 25/32 [15:40<02:43, 23.33s/it]26th batch Zeroshot performance: 100.00
+Classifier doesn't work for items in this batch: []
+ 81%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                          | 26/32 [15:52<01:58, 19.77s/it]27th batch Zeroshot performance: 75.00
+Classifier doesn't work for items in this batch: ['converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux']
+ 84%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎                     | 27/32 [16:01<01:23, 16.70s/it]28th batch Zeroshot performance: 81.25
+Classifier doesn't work for items in this batch: ['converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux', 'converse high deep bordeaux']
+ 88%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                 | 28/32 [16:12<00:59, 14.83s/it]29th batch Zeroshot performance: 84.38
+Classifier doesn't work for items in this batch: ['converse high black', 'converse high black', 'converse high black', 'converse high black', 'converse high black']
+ 91%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉             | 29/32 [16:30<00:47, 15.86s/it]30th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['converse low white', 'converse low white']
+ 94%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎        | 30/32 [16:59<00:39, 19.83s/it]31th batch Zeroshot performance: 62.50
+Classifier doesn't work for items in this batch: ['converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white', 'converse low white']
+ 97%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋    | 31/32 [17:34<00:24, 24.34s/it]32th batch Zeroshot performance: 57.14
+Classifier doesn't work for items in this batch: ['converse low white', 'converse low white', 'converse low white']
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 32/32 [17:43<00:00, 33.22s/it]
+brand : top1 Accuracy = 100.0%, top5 Accuracy = 100.0%
+color : top1 Accuracy = 99.3993993993994%, top5 Accuracy = 100.0%
+hightop : top1 Accuracy = 93.09309309309309%, top5 Accuracy = 100.0%
+sole : top1 Accuracy = 91.991991991992%, top5 Accuracy = 100.0%
+name_zeroshot : top1 Accuracy = 77.07707707707708%, top5 Accuracy = 99.8998998998999%
+zeroshot : top1 Accuracy = 87.18718718718719%
