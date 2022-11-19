@@ -20,7 +20,7 @@ def main(root_path, meta_info_path, prompt_path):
     print('This is available models: ', clip.available_models())
 
     # load model
-    model, preprocess = clip.load('ViT-L/14@336px')
+    model, preprocess = clip.load('ViT-B/32')
 
     # print model information
     print_clip_info(model)
@@ -51,7 +51,8 @@ def main(root_path, meta_info_path, prompt_path):
 
     # get precomputed embeddings from TextPreCompute
     name_weights, brand_weights, color_weights, hightop_weights, sole_weights = text_precompute.get_precomputed_text()
-
+    print(len(dataloader))
+    exit(1)
     with torch.no_grad():
         brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, \
         hightop_top1, hightop_top5, sole_top1, sole_top5, zeroshot_correct_count, total_num = \
@@ -158,7 +159,7 @@ def main(root_path, meta_info_path, prompt_path):
 
 
 if __name__ == '__main__':
-    root_path = "converse dataset"
+    root_path = "dataset"
     meta_info_path = "meta_info.csv"
     prompt_path = "config/prompt_template.yaml"
 

@@ -85,24 +85,30 @@ class ShoesImageDataset(Dataset):
         dir_list = os.listdir(path=root)
         preproc_image_list = []
         preproc_image_dict = {}
-        for prod_name in tqdm(dir_list):
+        for prod_dir in tqdm(dir_list):
+            # get prod_name
+            prod_split_underscore = prod_dir.split('_')
+            if len(prod_split_underscore)<5:
+                print(f"Wrong product name: {prod_dir}")
+                continue
+            prod_name = prod_split_underscore[4].strip()
+            # check keyerror
             if prod_name not in name_dict:
                 continue
             prod_id = name_dict[prod_name]
-            path = os.path.join(root, prod_name)
+            path = os.path.join(root, prod_dir)
             file_list = os.listdir(path)
             preproc_image_dict[prod_name]=len(file_list)
             for file_name in file_list:
                 file_path = os.path.join(path,file_name)
                 preproc_image = self._preprocess(Image.open(file_path))
                 preproc_image_list.append([prod_id,preproc_image])
-
+        print(f'Number of total preprocessed items: {len(preproc_image_list)}')
         if self.verbose:
             for k,v in preproc_image_dict.items():
                 print(f'# {k} : {v}')
 
             print(f'\n{"*"*10} Preprocessing about images is Completed. {"*"*10}\n')
-
         return preproc_image_list
 
 if __name__ == "__main__":
