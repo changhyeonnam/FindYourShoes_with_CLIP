@@ -82,6 +82,7 @@ class ShoesImageDataset(Dataset):
         return self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.sole_dict,self.meta_dict
 
     def _parse_image_files(self,root:str, name_dict:dict):
+        validate_format = ['jpg','png','jpeg']
         dir_list = os.listdir(path=root)
         preproc_image_list = []
         preproc_image_dict = {}
@@ -101,6 +102,10 @@ class ShoesImageDataset(Dataset):
             preproc_image_dict[prod_name]=len(file_list)
             for file_name in file_list:
                 file_path = os.path.join(path,file_name)
+                file_path_check = file_path.split('.')
+                if file_path_check[-1] not in validate_format:
+                    print(file_path)
+                    continue
                 preproc_image = self._preprocess(Image.open(file_path))
                 preproc_image_list.append([prod_id,preproc_image])
         print(f'Number of total preprocessed items: {len(preproc_image_list)}')

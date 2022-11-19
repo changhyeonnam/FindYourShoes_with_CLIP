@@ -51,8 +51,6 @@ def main(root_path, meta_info_path, prompt_path):
 
     # get precomputed embeddings from TextPreCompute
     name_weights, brand_weights, color_weights, hightop_weights, sole_weights = text_precompute.get_precomputed_text()
-    print(len(dataloader))
-    exit(1)
     with torch.no_grad():
         brand_top1, brand_top5, name_top1, name_top5, color_top1, color_top5, \
         hightop_top1, hightop_top5, sole_top1, sole_top5, zeroshot_correct_count, total_num = \
@@ -97,9 +95,9 @@ def main(root_path, meta_info_path, prompt_path):
             logits = (100.0 * image_features @ sole_weights)
             top1k_sole_idx = logits.topk(1, 1, True, True)[1].t().flatten().tolist()
             top1k_sole_name = [sole_inv_dict[idx] for idx in top1k_sole_idx]
-            acc1, acc5 = accuracy(logits, target_sole, topk=(1, 2))
-            sole_top1 += acc1
-            sole_top5 += acc5
+            # acc1, acc5 = accuracy(logits, target_sole, topk=(1,))
+            # sole_top1 += acc1
+            # sole_top5 += acc5
 
             # Lastly zeroshot with name --> This is temporary code. We will fix with using filtering table.
             logits = (100.0 * image_features @ name_weights)
@@ -117,6 +115,8 @@ def main(root_path, meta_info_path, prompt_path):
             # Last zeroshot with filtered name
             correct_count = 0
             prod_not_classified_list = []
+            prod_filtered_wrong = []
+            prod_filtered_wrong_items = []
             for img_idx, prod_list_meta, target in zip(range(image_features.size(0)),product_lists, target_name):
 
                 prod_list,brand,color,hightop= prod_list_meta['prod_list'],\
@@ -129,7 +129,8 @@ def main(root_path, meta_info_path, prompt_path):
 
                 # brand, color, hightop condition are wrong.
                 if tar_name not in prod_list:
-                    prod_not_classified_list.append(tar_name)
+                    prod_filtered_wrong_items.append((img_idx,target))
+                    prod_filtered_wrong.append(tar_name)
                     continue
 
                 target_idx = torch.LongTensor([prod_list.index(tar_name)]).to(device)
@@ -142,9 +143,23 @@ def main(root_path, meta_info_path, prompt_path):
                 else:
                     prod_not_classified_list.append(tar_name)
 
+            prod_classify_again_list = []
+            for img_idx,target in prod_filtered_wrong_items:
+                image_feature = image_features[img_idx]
+                logits = (100.0 * image_feature @ name_weights)
+                pred = logits.topk(1, 0, True, True)[1].t().flatten().item()
+                if pred == target:
+                    correct_count+=1
+                else:
+                    prod_classify_again_list.append(name_inv_dict[target])
+
+
+
             acc1 = correct_count/preproc_image.size(0)
             print(f'{i+1}th batch Zeroshot performance: {acc1*100:.2f}')
-            print(f'Classifier doesn\'t work for items in this batch: {prod_not_classified_list}')
+            print(f'1. FAIL : Filter items with brand, color, hightop: {prod_filtered_wrong}')
+            print(f'2. FAIL : Classifier with Filtered items: {prod_not_classified_list}')
+            print(f'3. FAIL : Classify with name again about wrong filtered items: {prod_classify_again_list}')
 
             zeroshot_correct_count+=correct_count
 

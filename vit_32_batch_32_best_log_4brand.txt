@@ -1,0 +1,134 @@
+changhyeon@MacBook-Pro-2 Zeroshot_Clip_shoesclassifier % python3 main.py
+This is available models:  ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
+Model parameters: 151,277,313
+Input resolution: 224
+Context length: 77
+Vocab size: 49408
+
+********** Preprocessing about Images is Started. **********
+
+# class of name: 21
+# class of brand: 4
+# class of color: 8
+# class of hightop: 2
+# class of sole: 2
+# class of meta: 21
+ 23%|████████████████▎                                                       | 5/22 [00:03<00:13,  1.29it/s]Wrong product name: .DS_Store
+ 59%|█████████████████████████████████████████▉                             | 13/22 [00:09<00:06,  1.36it/s]/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/PIL/Image.py:959: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+100%|███████████████████████████████████████████████████████████████████████| 22/22 [00:15<00:00,  1.39it/s]
+Number of total preprocessed items: 952
+# Oldschool Black : 52
+# Dunk Low Retro Gym Red : 31
+# Converse Low Black : 51
+# Converse Low Rush Blue : 35
+# Converse High Parchment : 50
+# Jordan1 Retro High og Chicago : 53
+# Jordan1 Retro High og Black Mocha : 38
+# Marshmallow Green : 29
+# Converse High White : 64
+# Dunk Low Retro Black : 46
+# Checkerboard Slipon : 53
+# Marshmallow Red : 38
+# Jordan1 Mid Light Smoke Gray : 43
+# Jordan1 Retro High og University Blue : 42
+# Converse Low Midnight Clover : 59
+# Yeezy Boost 350 v2 Zebra : 33
+# Converse Onestar Black : 70
+# Converse Low White : 54
+# Superstar 82 Black : 27
+# Yeezy Boost 350 v2 Bone : 44
+# Stan Smith : 40
+
+********** Preprocessing about images is Completed. **********
+
+
+********** Preprocessing about prompt template is Started. **********
+
+This is prompt templates of name
+['a photo of the {} shoes.', 'a photo of a {} sneakers.', 'a photo of the {} shoes.']
+This is prompt templates of brand
+['a photo of the {} brand shoes.', 'a photo of a {} brand sneakers.', 'a bright photo of the {} brand sneakers.']
+This is prompt templates of color
+['a photo of the {} color shoes.', 'a photo of a {} color sneakers.', 'a bright photo of the {} color sneakers.']
+This is prompt templates of hightop
+['a photo of the {}top shoes.', 'a photo of a {}top sneakers.', 'a bright photo of the {}top sneakers.']
+This is prompt templates of sole
+['a photo of the shoes of sole is {}', 'a photo of a sneakers of sole is {}', 'a bright photo of the sneakers of sole is {}']
+This is prompt templates of zeroshot
+['A photo of the {} shoes, brand is {}, color is {}, hightop is {}top.', 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top.', 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes']
+100%|███████████████████████████████████████████████████████████████████████| 21/21 [00:05<00:00,  3.63it/s]
+100%|█████████████████████████████████████████████████████████████████████████| 4/4 [00:01<00:00,  3.14it/s]
+100%|█████████████████████████████████████████████████████████████████████████| 8/8 [00:02<00:00,  3.46it/s]
+100%|█████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  3.42it/s]
+100%|█████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  3.28it/s]
+
+********** Preprocessing about prompt template is Completed. **********
+
+  0%|                                                                                | 0/30 [00:00<?, ?it/s]1th batch Zeroshot performance: 65.62
+Classifier doesn't work for items in this batch: ['Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black']
+  3%|██▍                                                                     | 1/30 [00:24<11:51, 24.53s/it]2th batch Zeroshot performance: 37.50
+Classifier doesn't work for items in this batch: ['Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Oldschool Black', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red']
+  7%|████▊                                                                   | 2/30 [00:40<09:05, 19.50s/it]3th batch Zeroshot performance: 34.38
+Classifier doesn't work for items in this batch: ['Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Converse Low Black', 'Converse Low Black']
+ 10%|███████▏                                                                | 3/30 [00:51<07:01, 15.59s/it]4th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['Converse Low Black', 'Converse Low Black', 'Converse Low Black']
+ 13%|█████████▌                                                              | 4/30 [01:12<07:40, 17.72s/it]5th batch Zeroshot performance: 96.88
+Classifier doesn't work for items in this batch: ['Converse Low Black']
+ 17%|████████████                                                            | 5/30 [01:26<06:52, 16.49s/it]6th batch Zeroshot performance: 59.38
+Classifier doesn't work for items in this batch: ['Converse Low Rush Blue', 'Converse Low Rush Blue', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment']
+ 20%|██████████████▍                                                         | 6/30 [01:41<06:17, 15.73s/it]7th batch Zeroshot performance: 87.50
+Classifier doesn't work for items in this batch: ['Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment']
+ 23%|████████████████▊                                                       | 7/30 [02:00<06:29, 16.91s/it]8th batch Zeroshot performance: 100.00
+Classifier doesn't work for items in this batch: []
+ 27%|███████████████████▏                                                    | 8/30 [02:13<05:43, 15.63s/it]9th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha']
+ 30%|█████████████████████▌                                                  | 9/30 [02:25<05:09, 14.73s/it]10th batch Zeroshot performance: 84.38
+Classifier doesn't work for items in this batch: ['Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha']
+ 33%|███████████████████████▋                                               | 10/30 [02:40<04:50, 14.53s/it]11th batch Zeroshot performance: 87.50
+Classifier doesn't work for items in this batch: ['Marshmallow Green', 'Converse High White', 'Converse High White', 'Converse High White']
+ 37%|██████████████████████████                                             | 11/30 [02:59<05:06, 16.11s/it]12th batch Zeroshot performance: 78.12
+Classifier doesn't work for items in this batch: ['Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White']
+ 40%|████████████████████████████▍                                          | 12/30 [03:23<05:32, 18.49s/it]13th batch Zeroshot performance: 43.75
+Classifier doesn't work for items in this batch: ['Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black']
+ 43%|██████████████████████████████▊                                        | 13/30 [03:39<05:01, 17.72s/it]14th batch Zeroshot performance: 3.12
+Classifier doesn't work for items in this batch: ['Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black']
+ 47%|█████████████████████████████████▏                                     | 14/30 [03:45<03:44, 14.02s/it]15th batch Zeroshot performance: 3.12
+Classifier doesn't work for items in this batch: ['Dunk Low Retro Black', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon']
+ 50%|███████████████████████████████████▌                                   | 15/30 [03:49<02:46, 11.13s/it]16th batch Zeroshot performance: 21.88
+Classifier doesn't work for items in this batch: ['Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Checkerboard Slipon', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red']
+ 53%|█████████████████████████████████████▊                                 | 16/30 [03:56<02:16,  9.76s/it]17th batch Zeroshot performance: 43.75
+Classifier doesn't work for items in this batch: ['Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Marshmallow Red', 'Jordan1 Mid Light Smoke Gray']
+ 57%|████████████████████████████████████████▏                              | 17/30 [04:05<02:06,  9.72s/it]18th batch Zeroshot performance: 50.00
+Classifier doesn't work for items in this batch: ['Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray']
+ 60%|██████████████████████████████████████████▌                            | 18/30 [04:16<01:59,  9.93s/it]19th batch Zeroshot performance: 81.25
+Classifier doesn't work for items in this batch: ['Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Retro High og University Blue']
+ 63%|████████████████████████████████████████████▉                          | 19/30 [04:27<01:53, 10.29s/it]20th batch Zeroshot performance: 96.88
+Classifier doesn't work for items in this batch: ['Converse Low Midnight Clover']
+ 67%|███████████████████████████████████████████████▎                       | 20/30 [04:40<01:53, 11.31s/it]21th batch Zeroshot performance: 90.62
+Classifier doesn't work for items in this batch: ['Converse Low Midnight Clover', 'Converse Low Midnight Clover', 'Converse Low Midnight Clover']
+ 70%|█████████████████████████████████████████████████▋                     | 21/30 [04:54<01:47, 11.89s/it]22th batch Zeroshot performance: 34.38
+Classifier doesn't work for items in this batch: ['Converse Low Midnight Clover', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra']
+ 73%|████████████████████████████████████████████████████                   | 22/30 [05:01<01:24, 10.55s/it]23th batch Zeroshot performance: 46.88
+Classifier doesn't work for items in this batch: ['Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black']
+ 77%|██████████████████████████████████████████████████████▍                | 23/30 [05:15<01:19, 11.41s/it]24th batch Zeroshot performance: 81.25
+Classifier doesn't work for items in this batch: ['Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black']
+ 80%|████████████████████████████████████████████████████████▊              | 24/30 [05:34<01:22, 13.73s/it]25th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['Converse Onestar Black', 'Converse Onestar Black']
+ 83%|███████████████████████████████████████████████████████████▏           | 25/30 [05:53<01:16, 15.29s/it]26th batch Zeroshot performance: 93.75
+Classifier doesn't work for items in this batch: ['Converse Low White', 'Converse Low White']
+ 87%|█████████████████████████████████████████████████████████████▌         | 26/30 [06:05<00:57, 14.42s/it]27th batch Zeroshot performance: 59.38
+Classifier doesn't work for items in this batch: ['Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black', 'Superstar 82 Black']
+ 90%|███████████████████████████████████████████████████████████████▉       | 27/30 [06:16<00:39, 13.29s/it]28th batch Zeroshot performance: 6.25
+Classifier doesn't work for items in this batch: ['Superstar 82 Black', 'Superstar 82 Black', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone']
+ 93%|██████████████████████████████████████████████████████████████████▎    | 28/30 [06:21<00:21, 10.83s/it]29th batch Zeroshot performance: 34.38
+Classifier doesn't work for items in this batch: ['Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith']
+ 97%|████████████████████████████████████████████████████████████████████▋  | 29/30 [06:28<00:09,  9.84s/it]30th batch Zeroshot performance: 50.00
+Classifier doesn't work for items in this batch: ['Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith', 'Stan Smith']
+100%|███████████████████████████████████████████████████████████████████████| 30/30 [06:36<00:00, 13.23s/it]
+brand : top1 Accuracy = 97.16386554621849%, top5 Accuracy = 97.16386554621849%
+color : top1 Accuracy = 83.08823529411765%, top5 Accuracy = 100.0%
+hightop : top1 Accuracy = 84.13865546218487%, top5 Accuracy = 100.0%
+sole : top1 Accuracy = 86.1344537815126%, top5 Accuracy = 100.0%
+name_zeroshot : top1 Accuracy = 83.71848739495799%, top5 Accuracy = 99.68487394957984%
+zeroshot : top1 Accuracy = 61.65966386554622%
