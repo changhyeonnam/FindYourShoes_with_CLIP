@@ -95,7 +95,7 @@ def main(root_path, meta_info_path, prompt_path):
             logits = (100.0 * image_features @ sole_weights)
             top1k_sole_idx = logits.topk(1, 1, True, True)[1].t().flatten().tolist()
             top1k_sole_name = [sole_inv_dict[idx] for idx in top1k_sole_idx]
-            # acc1, acc5 = accuracy(logits, target_sole, topk=(1,))
+            acc1 = accuracy(logits, target_sole, topk=(1,))
             # sole_top1 += acc1
             # sole_top5 += acc5
 
@@ -116,35 +116,42 @@ def main(root_path, meta_info_path, prompt_path):
             correct_count = 0
             prod_not_classified_list = []
             prod_filtered_wrong = []
-            prod_filtered_wrong_items = []
+            prod_failed_list = []
+            # adidas = ['Adidas Samba Vegan Black', 'Adidas Superstar 82 Black']
+
             for img_idx, prod_list_meta, target in zip(range(image_features.size(0)),product_lists, target_name):
 
-                prod_list,brand,color,hightop= prod_list_meta['prod_list'],\
+                prod_list,brand,color,hightop,sole= prod_list_meta['prod_list'],\
                                                 prod_list_meta['brand'],\
                                                 prod_list_meta['color'],\
                                                 prod_list_meta['hightop'],\
-                                                # prod_list_meta['sole']
+                                                prod_list_meta['sole']
                 # get name of target
                 tar_name = name_inv_dict[target]
 
                 # brand, color, hightop condition are wrong.
                 if tar_name not in prod_list:
-                    prod_filtered_wrong_items.append((img_idx,target))
+                    prod_failed_list.append((img_idx,target))
                     prod_filtered_wrong.append(tar_name)
                     continue
 
                 target_idx = torch.LongTensor([prod_list.index(tar_name)]).to(device)
-                zeroshot_weight = text_precompute.compute_prompt_name(prod_list,brand,color,hightop)
+                zeroshot_weight = text_precompute.compute_prompt_name(prod_list,brand,color,hightop,sole, False)
+                # if tar_name in adidas:
+                #     zeroshot_weight = text_precompute.compute_prompt_name(prod_list, brand, color, hightop, sole, True)
+                # else:
+                #     zeroshot_weight = text_precompute.compute_prompt_name(prod_list,brand,color,hightop,sole, False)
                 image_feature = image_features[img_idx]
                 logits = (100.0 * image_feature @ zeroshot_weight)
                 pred = logits.topk(1, 0, True, True)[1].t().flatten().item()
                 if pred == target_idx:
                     correct_count += 1
                 else:
+                    prod_failed_list.append((img_idx,target))
                     prod_not_classified_list.append(tar_name)
 
             prod_classify_again_list = []
-            for img_idx,target in prod_filtered_wrong_items:
+            for img_idx,target in prod_failed_list:
                 image_feature = image_features[img_idx]
                 logits = (100.0 * image_feature @ name_weights)
                 pred = logits.topk(1, 0, True, True)[1].t().flatten().item()
@@ -159,7 +166,7 @@ def main(root_path, meta_info_path, prompt_path):
             print(f'{i+1}th batch Zeroshot performance: {acc1*100:.2f}')
             print(f'1. FAIL : Filter items with brand, color, hightop: {prod_filtered_wrong}')
             print(f'2. FAIL : Classifier with Filtered items: {prod_not_classified_list}')
-            print(f'3. FAIL : Classify with name again about wrong filtered items: {prod_classify_again_list}')
+            print(f'3. FAIL : Classify with name again about failed items: {prod_classify_again_list}')
 
             zeroshot_correct_count+=correct_count
 

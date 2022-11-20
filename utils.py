@@ -3,11 +3,11 @@ import pandas as pd
 import torch
 import clip
 
-def find_filtered_prod(df, brands, colors, hightops,soles):
+def find_filtered_prod(df, brands, colors, hightops, soles):
     product_lists = []
-    for brand,color,hightop in zip(brands,colors,hightops):
+    for brand,color,hightop,sole in zip(brands,colors,hightops,soles):
         prod_list = df.loc[((df['brand']==brand) & (df['color'] == color) & (df['hightop'] == hightop)), 'name'].values.tolist()
-        product_lists.append({'prod_list':prod_list,'brand':brand,'color':color,'hightop':hightop})
+        product_lists.append({'prod_list':prod_list,'brand':brand,'color':color,'hightop':hightop, 'sole':sole})
     return product_lists
 
 def invert_dict(dt):
