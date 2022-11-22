@@ -24,7 +24,7 @@ class ShoesImageDataset(Dataset):
                 root:str,
                 meta_info_df:pd.DataFrame,
                 preprocess,
-                verbose: bool=True
+                verbose: bool=True,
                 ) ->None:
         super(ShoesImageDataset).__init__()
         self._root = root
