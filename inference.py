@@ -68,7 +68,7 @@ class Recommend:
         print(f'{"-"*50}')
 
     def get_text(self):
-        text = input('What Feature do you want change?(ex, same brand but green color, color is green, color is red)\n : ')
+        text = input('What Feature do you want change?(ex, I want same brand but color is red/gray/bown)\n : ')
         return text
 
     def parse_image(self, image_path):
@@ -174,7 +174,7 @@ class Recommend:
         input_text = self.get_text()
         preproc_image_dict = self.preproc_image_dict
         classified_product = self.classified_product
-        Additional_text = f"Given shoes image is {classified_product}, "
+        Additional_text = f"Similar to {classified_product}, I want photo of "
         input_text = Additional_text+input_text
 
         text = clip.tokenize(input_text)
