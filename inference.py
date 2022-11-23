@@ -174,6 +174,8 @@ class Recommend:
         input_text = self.get_text()
         preproc_image_dict = self.preproc_image_dict
         classified_product = self.classified_product
+        Additional_text = f"Given shoes image is {classified_product}, "
+        input_text = Additional_text+input_text
 
         text = clip.tokenize(input_text)
         text_feature = model.encode_text(text)
