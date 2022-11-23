@@ -1,5 +1,4 @@
 import os
-from dataclasses import dataclass, field
 from typing import Dict,List,Optional,Tuple
 from torch.utils.data import Dataset
 from PIL import Image
@@ -8,15 +7,7 @@ import numpy as np
 import pandas as pd
 import torch
 from tqdm import tqdm
-from utils import update_dict
-
-@dataclass
-class ImageAnnotation:
-    brand:str
-    color:str
-    hightop:str
-    sole:str
-    name:str
+from utils import update_dict,ImageAnnotation
 
 
 class ShoesImageDataset(Dataset):

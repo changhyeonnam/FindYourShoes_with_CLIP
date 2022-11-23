@@ -2,6 +2,15 @@ import numpy as np
 import pandas as pd
 import torch
 import clip
+from dataclasses import dataclass, field
+
+@dataclass
+class ImageAnnotation:
+    brand:str
+    color:str
+    hightop:str
+    sole:str
+    name:str
 
 def find_filtered_prod(df, brands, colors, hightops, soles):
     product_lists = []
@@ -62,22 +71,31 @@ def update_dict_num(dt, key):
 
 def load_meta_info(df):
     df_dicts = df.to_dict(orient='records')
-    name_dict, brand_dict, color_dict, hightop_dict, sole_dict = {}, {}, {}, {}, {}
+    name_dict, brand_dict, color_dict, hightop_dict, sole_dict, meta_dict = {}, {}, {}, {}, {}, {}
     for dt in df_dicts:
         name, brand, color, hightop, sole = dt['name'], dt['brand'], dt['color'], dt['hightop'], dt['sole']
+        meta_info = ImageAnnotation(
+            brand=brand,
+            color=color,
+            hightop=hightop,
+            sole=sole,
+            name=name
+        )
         update_dict(dict=name_dict, key=name)
         update_dict(dict=brand_dict, key=brand)
         update_dict(dict=color_dict, key=color)
         update_dict(dict=hightop_dict, key=hightop)
         update_dict(dict=sole_dict, key=sole)
-    return name_dict, brand_dict, color_dict, hightop_dict, sole_dict
+        update_dict(dict=meta_dict, key=name, value=meta_info)
+
+    return name_dict, brand_dict, color_dict, hightop_dict, sole_dict, meta_dict
 
 
-def build_feat_dict(name_dt, brand_dt, color_dt, hightop_dt, sole_dt):
+def build_feat_inv_dict(name_dt, brand_dt, color_dt, hightop_dt, sole_dt):
     dicts = {}
-    dicts['name'] = name_dt
-    dicts['brand'] = brand_dt
-    dicts['color'] = color_dt
-    dicts['hightop'] = hightop_dt
-    dicts['sole'] = sole_dt
+    dicts['name'] = invert_dict(name_dt)
+    dicts['brand'] = invert_dict(brand_dt)
+    dicts['color'] = invert_dict(color_dt)
+    dicts['hightop'] = invert_dict(hightop_dt)
+    dicts['sole'] = invert_dict(sole_dt)
     return dicts

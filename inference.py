@@ -5,7 +5,7 @@ import clip
 from tqdm import tqdm
 import os
 from prompt_compute import TextPreCompute
-from utils import invert_dict,load_meta_info,build_feat_dict
+from utils import invert_dict,load_meta_info,build_feat_inv_dict
 import numpy as np
 class ImageCandidate:
     def __init__(self, infer_path, preprocess):
@@ -50,15 +50,22 @@ class Recommend:
                  text_precompute:TextPreCompute,
                  preproc_image_dict,
                  text_inv_dicts,
+                 meta_dict,
                  meta_df,
-                 verbose = False
+                 verbose = True
                  ):
         self.model = model
         self.image = self.parse_image(image_path)
         self.preproc_image_dict = preproc_image_dict
         self.verbose =verbose
         self.classified_product = self.classify(self.image, model,preprocess, text_precompute, text_inv_dicts,meta_df)
-        print('Given Shoes classs is ', self.classified_product)
+        self.product_meta = meta_dict[self.classified_product]
+        print('Given Shoes class is ', self.classified_product)
+        print(f'This is information about given Shoes:\nbrand: {self.product_meta.brand}\n'
+              f'color: {self.product_meta.color}\nhightop: {self.product_meta.hightop}\n'
+              f'sole: {self.product_meta.sole}')
+        print('You can use these info for generating prompt')
+        print(f'{"-"*50}')
 
     def get_text(self):
         text = input('What Feature do you want change?(ex, same brand but green color, color is green, color is red)\n : ')
@@ -148,6 +155,7 @@ class Recommend:
                 if self.verbose:
                     print(f'zeroshot logit: {zeroshot_logit}, name logit : {name_logit}')
                     print(f'zeroshot name: {zeroshot_product}, name top1k : {top1k_name} ')
+                    print(f'{"-" * 50}')
                 if zeroshot_logit>name_logit:
                     classified_product = zeroshot_product
                 else:
@@ -156,6 +164,7 @@ class Recommend:
                 if self.verbose:
                     print(f'name logit:{name_logit}')
                     print(f'name top1k:{top1k_name}')
+                    print(f'{"-" * 50}')
                 classified_product = top1k_name
 
             return classified_product
@@ -184,9 +193,13 @@ class Recommend:
         logits = (100.0 * text_feature @ image_features.T)
         logits = torch.squeeze(logits)
         top1k_idx = logits.topk(1, 0, True, True)[1].t().flatten().item()
-
+        top3k_idx = logits.topk(3, 0, True, True)[1].t().flatten().tolist()
         print(f"Recommended item is {products[top1k_idx]}")
 
+        if self.verbose:
+            for rank, idx in enumerate((top3k_idx)):
+                print(f"rank#{rank+1} : {products[idx]}")
+        print(f'{"-" * 50}')
 
 
 
@@ -207,14 +220,8 @@ def main():
 
     # loading meta dataframe and preprocessing.
     meta_df = pd.read_csv(meta_info_path)
-    name_dict, brand_dict, color_dict, hightop_dict, sole_dict = load_meta_info(meta_df)
-    name_inv_dict, brand_inv_dict, color_inv_dict, hightop_inv_dict, sole_inv_dict = invert_dict(name_dict), \
-                                                                                     invert_dict(brand_dict), \
-                                                                                     invert_dict(color_dict), \
-                                                                                     invert_dict(hightop_dict), \
-                                                                                     invert_dict(sole_dict)
-
-    text_inv_dicts = build_feat_dict(name_inv_dict, brand_inv_dict,color_inv_dict, hightop_inv_dict, sole_inv_dict)
+    name_dict, brand_dict, color_dict, hightop_dict, sole_dict, meta_dict = load_meta_info(meta_df)
+    text_inv_dicts = build_feat_inv_dict(name_dict, brand_dict,color_dict, hightop_dict, sole_dict)
 
     text_precompute = TextPreCompute(model,
                                      device,
@@ -232,7 +239,7 @@ def main():
     PATH_IMG = 'recommend_image/img.png'
     inference = Recommend(image_path=PATH_IMG,model=model,preprocess=preprocess,
                           text_precompute=text_precompute,preproc_image_dict = preproc_image_dict,
-                          text_inv_dicts=text_inv_dicts,meta_df=meta_df)
+                          text_inv_dicts=text_inv_dicts,meta_dict=meta_dict,meta_df=meta_df)
     for i in range(10):
         inference.recommend()
 if __name__ == '__main__':
