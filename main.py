@@ -181,8 +181,8 @@ def main(root_path, meta_info_path, prompt_path):
 
 
 if __name__ == '__main__':
-    root_path = "dataset"
-    meta_info_path = "meta_info.csv"
+    root_path = "filtered_dataset"
+    meta_info_path = "../meta_info.csv"
     prompt_path = "config/prompt_template.yaml"
 
     main(root_path, meta_info_path, prompt_path)

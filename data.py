@@ -118,7 +118,7 @@ class ShoesImageDataset(Dataset):
 
 if __name__ == "__main__":
     model, preprocess = clip.load("ViT-B/32")
-    ROOT_PATH = "converse dataset"
+    ROOT_PATH = "converse_dataset"
     meta_info_path = "meta_info.csv"
     dataset = ShoesImageDataset(root=ROOT_PATH,
                                 preprocess=preprocess,
