@@ -83,7 +83,7 @@ sh dataset.sh
 python3 csv_generator.py
 ```
 
-### Experiment for evaluing model
+### Experiment for evaluating model
 
 ```jsx
 sh run_experiment.sh
