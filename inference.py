@@ -92,7 +92,7 @@ class Recommend:
         # id to name dictionary
         name_inv_dict, brand_inv_dict, color_inv_dict, hightop_inv_dict, sole_inv_dict = text_inv_dicts['name'],\
                                                                                          text_inv_dicts['brand'],\
-                                                                                         text_inv_dicts['color'],\
+                                                                            text_inv_dicts['color'],\
                                                                                          text_inv_dicts['hightop'],\
                                                                                          text_inv_dicts['sole']
         # preprocessed image

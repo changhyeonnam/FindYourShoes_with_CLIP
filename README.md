@@ -38,9 +38,7 @@ For filtering crawled dataset, we made crawling Rule for our dataset. We followe
 7.  The background doesn't matter.
 8. It's good to have as many angles as possible.
 
-**We will not use datasets for commercial purposes and we are going to share dataset when it is collected.** 
-
----
+**We will not use datasets for commercial purposes and we are going to share dataset when it is collected.**
 
 ## 3.Method
 
