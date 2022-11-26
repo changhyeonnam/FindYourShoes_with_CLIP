@@ -77,7 +77,7 @@ zeroshot : top1 Accuracy = 96.38157894736842%
 sh dataset.sh
 ```
 
-### Before run the model, You should generate table for shoes table.
+### Before run the model, You should generate table for shoes information.
 
 ```jsx
 python3 csv_generator.py
