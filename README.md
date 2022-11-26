@@ -1,8 +1,11 @@
 # Find Your Shoes with CLIP
 
-This repository is about Find Your Shoes using [CLIP(Contrastive Language-Image PreTraining)](https://github.com/openai/CLIP) model which is from openai. We developed this service which is inspired by Google's image search and NAVER OmniSearch. 
+This repository is about Find Your Shoes using [CLIP(Contrastive Language-Image PreTraining)](https://github.com/openai/CLIP) model which is from openai. 
+We developed this service which is inspired by [Google's image search](https://images.google.com/) and [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs). 
+We found that Our service is very similar to Naver Omnisearch but we developed this service because it could be challenging and fun to implement this service.
 
-We thought it would be a meaningful service if we could search for the shoes by image when we don't know the name of the shoes, and search again by changing some features in the shoes. So we developed the service by limiting the dataset to shoes.
+We thought it would be a meaningful service if we could search for the shoes by image when we don't know the name of the shoes, and search again by changing some features in the shoes. 
+So we developed the service by limiting the dataset to shoes.
 
 For example, when text for different color info from original color and a user's shoes image were given as an input, the model finds the same kind of shoes in the given text color.
 
