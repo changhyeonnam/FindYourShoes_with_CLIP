@@ -7,7 +7,7 @@ So we developed the service by limiting the dataset to shoes.
 
 For example, when text for different color info from original color and a user's shoes image were given as an input, the model finds the same kind of shoes in the given text color.
 
-We developed this service which is inspired by [Google's image search](https://images.google.com/). 
+We developed this service inspired by [Google's image search](https://images.google.com/). 
 We found that our service is very similiar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement this service.
 
 This Project is ongoing which is completed by 2022.12. This is to-do-list about our development.
