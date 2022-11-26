@@ -25,7 +25,7 @@ This Project is ongoing which is completed by 2022.12. This is to-do-list about 
 - [ ]  Use Few shot method for inference to improve performance (ongoing).
 - [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/).
 
-## 1. Dataset
+## Dataset
 
 There were not existing shoes labeled dataset which include various features (e.g, brand, color, hightop, sole). And also, there were not stable crawler for crawling full size image from google. So we made our own [Crawler](https://github.com/changhyeonnam/Google-Full-size-image-crawler) using python, selenium. 
 
@@ -44,9 +44,9 @@ For filtering crawled dataset, we made crawling Rule for our dataset. We followe
 
 **We will not use datasets for commercial purposes and we are going to share dataset when it is collected.**
 
-## 3.Method
+## Method
 
-### 3.1 Prompt Ensemble
+### 1. Prompt Ensemble
 
 우리는 기본적으로  5단계에 걸쳐서 모델을 실험하고, 성능 향상시키고 있다. 
 
