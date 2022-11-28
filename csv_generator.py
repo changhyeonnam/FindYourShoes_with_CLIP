@@ -7,6 +7,7 @@ def foldername_split(PATH):
     for foldername in folder_list:
         folder = foldername.split('_')
         if len(folder)<5:
+            print(folder)
             continue
         brand.append(folder[0].strip())
         hightop.append(folder[1].strip())

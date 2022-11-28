@@ -1,0 +1,33 @@
+This is available models:  ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
+  7%|▋         | 2/29 [00:00<00:01, 15.88it/s]Wrong product name: .DS_Store
+ 31%|███       | 9/29 [00:00<00:00, 43.26it/s]/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/PIL/Image.py:959: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+100%|██████████| 29/29 [00:00<00:00, 47.75it/s]
+100%|██████████| 28/28 [00:07<00:00,  3.82it/s]
+100%|██████████| 4/4 [00:00<00:00,  4.05it/s]
+100%|██████████| 8/8 [00:02<00:00,  3.89it/s]
+100%|██████████| 2/2 [00:00<00:00,  3.97it/s]
+100%|██████████| 3/3 [00:00<00:00,  4.02it/s]
+zeroshot logit: 33.093421936035156, name logit : 31.318761825561523
+zeroshot name: Jordan1 Retro High og University Blue, name top1k : Jordan1 Retro High og University Blue
+--------------------------------------------------
+Given Shoes class is  Jordan1 Retro High og University Blue
+This is information about given Shoes:
+brand: Nike
+color: Blue
+hightop: High
+sole: Plain Sole
+You can use these info for generating prompt
+--------------------------------------------------
+What Feature do you want change?(ex, same brand but green color, color is green, color is red)
+ : brand is Nike, hightop is High but color is red
+Recommended item is Jordan1 Retro High og Chicago
+rank#1 : Jordan1 Retro High og Chicago
+rank#2 : Dunk Low Retro Gym Red
+rank#3 : Vans Authentic Red
+What Feature do you want change?(ex, same brand but green color, color is green, color is red)
+ : Nike, High, red
+Recommended item is Dunk Low Retro Gym Red
+rank#1 : Dunk Low Retro Gym Red
+rank#2 : Jordan1 Retro High og Chicago
+rank#3 : Vans Authentic Red

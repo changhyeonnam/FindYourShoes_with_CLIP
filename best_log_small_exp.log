@@ -1,0 +1,247 @@
+changhyeon@MacBook-Pro-2 Zeroshot_Clip_shoesclassifier % python3 main.py
+This is available models:  ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
+Model parameters: 151,277,313
+Input resolution: 224
+Context length: 77
+Vocab size: 49408
+
+********** Preprocessing about Images is Started. **********
+
+# class of name: 28
+# class of brand: 4
+# class of color: 8
+# class of hightop: 2
+# class of sole: 3
+# class of meta: 28
+ 10%|████████████████████▋                                                                                                                                                                                   | 3/29 [00:01<00:12,  2.06it/s]dataset/Vans_Low_Black_Plain Sole_Vans Oldskool Black/robust
+ 17%|██████████████████████████████████▍                                                                                                                                                                     | 5/29 [00:02<00:14,  1.65it/s]Wrong product name: .DS_Store
+ 24%|████████████████████████████████████████████████▎                                                                                                                                                       | 7/29 [00:02<00:07,  3.04it/s]dataset/Nike_High_Red_Plain Sole_Jordan1 Retro High og Chicago/robust
+ 28%|███████████████████████████████████████████████████████▏                                                                                                                                                | 8/29 [00:04<00:11,  1.90it/s]dataset/Nike_High_Brown_Plain Sole_Jordan1 Retro High og Black Mocha/robust
+ 34%|████████████████████████████████████████████████████████████████████▌                                                                                                                                  | 10/29 [00:05<00:11,  1.70it/s]dataset/Vans_Low_Red_Plain Sole_Vans Authentic Red/robust
+/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/PIL/Image.py:959: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+ 38%|███████████████████████████████████████████████████████████████████████████▍                                                                                                                           | 11/29 [00:05<00:09,  1.86it/s]dataset/Vans_Low_Green_Plain Sole_Vans Marshmallow Green/robust
+ 41%|██████████████████████████████████████████████████████████████████████████████████▎                                                                                                                    | 12/29 [00:06<00:08,  2.00it/s]dataset/Nike_High_Black_Plain Sole_Dunk Low Retro Black/robust
+ 45%|█████████████████████████████████████████████████████████████████████████████████████████▏                                                                                                             | 13/29 [00:06<00:08,  1.82it/s]dataset/Vans_Low_Black_Plain Sole_Vans Checkerboard Slipon/robust
+ 48%|████████████████████████████████████████████████████████████████████████████████████████████████                                                                                                       | 14/29 [00:07<00:08,  1.73it/s]dataset/Nike_High_Gray_Plain Sole_Jordan1 Mid Light Smoke Gray/robust
+ 55%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                                                                                         | 16/29 [00:09<00:10,  1.19it/s]dataset/Nike_High_Blue_Plain Sole_Jordan1 Retro High og University Blue/robust
+ 69%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏                                                             | 20/29 [00:12<00:06,  1.38it/s]dataset/Vans_Low_Red_Plain Sole_Vans Marshmallow Red/robust
+ 72%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                                                       | 21/29 [00:13<00:05,  1.48it/s]dataset/Vans_Low_Blue_Plain Sole_Vans Style 36 Suede Dress Blues/robust
+ 90%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                    | 26/29 [00:15<00:01,  2.15it/s]dataset/Nike_Low_Red_Plain Sole_Dunk Low Retro Gym Red/robust
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 29/29 [00:17<00:00,  1.69it/s]
+Number of total preprocessed items: 1216
+# Converse Low Black : 50
+# Yeezy Boost 350 v2 Beluga : 32
+# Converse Low Rush Blue : 33
+# Vans Oldskool Black : 52
+# Converse High Parchment : 48
+# Dunk Low Retro Valerian Blue : 29
+# Jordan1 Retro High og Chicago : 54
+# Jordan1 Retro High og Black Mocha : 39
+# Converse High White : 60
+# Vans Authentic Red : 34
+# Vans Marshmallow Green : 28
+# Dunk Low Retro Black : 47
+# Vans Checkerboard Slipon : 54
+# Jordan1 Mid Light Smoke Gray : 44
+# Vans Sk8 Hi Golden Yellow : 57
+# Jordan1 Retro High og University Blue : 43
+# Converse Low Midnight Clover : 58
+# Yeezy Boost 350 v2 Zebra : 33
+# Converse Onestar Black : 70
+# Vans Marshmallow Red : 39
+# Vans Style 36 Suede Dress Blues : 47
+# Adidas Gazelle Almost Yellow : 30
+# Converse Low White : 52
+# Adidas Stan Smith : 38
+# Adidas Superstar Black : 26
+# Dunk Low Retro Gym Red : 32
+# Yeezy Boost 350 v2 Bone : 44
+# Adidas Samba Vegan Black : 55
+
+********** Preprocessing about images is Completed. **********
+
+
+********** Preprocessing about prompt template is Started. **********
+
+This is prompt templates of name
+['a photo of the {} shoes.', 'a photo of a {} sneakers.', 'a photo of the {} shoes.']
+This is prompt templates of brand
+['a photo of the {} brand shoes.', 'a photo of a {} brand sneakers.', 'a bright photo of the {} brand sneakers.']
+This is prompt templates of color
+['a photo of the {} color shoes.', 'a photo of a {} color sneakers.', 'a bright photo of the {} color sneakers.']
+This is prompt templates of hightop
+['a photo of the {}top shoes.', 'a photo of a {}top sneakers.', 'a bright photo of the {}top sneakers.']
+This is prompt templates of sole
+['a photo of the shoes of sole is {}', 'a photo of a sneakers of sole is {}', 'a bright photo of the sneakers of sole is {}']
+This is prompt templates of zeroshot
+['A photo of the {} shoes, brand is {}, color is {}, hightop is {}top.', 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top.', 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes.']
+This is prompt templates of zeroshot_with_sole
+['A photo of the {} shoes, brand is {}, color is {}, hightop is {}top, sole is {}.', 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top, sole is {}.', 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes, sole is {}.']
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 28/28 [00:06<00:00,  4.47it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:00<00:00,  4.49it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:01<00:00,  4.52it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  4.41it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00,  4.34it/s]
+
+********** Preprocessing about prompt template is Completed. **********
+
+  0%|                                                                                                                                                                                                                | 0/38 [00:00<?, ?it/s]1th batch Zeroshot performance: 87.50
+1. FAIL : Filter items with brand, color, hightop: ['Converse Low Black']
+2. FAIL : Classifier with Filtered items: ['Converse Low Black', 'Converse Low Black', 'Converse Low Black']
+3. FAIL : Classify with name again about failed items: ['Converse Low Black', 'Converse Low Black', 'Converse Low Black', 'Converse Low Black']
+  3%|█████▎                                                                                                                                                                                                  | 1/38 [00:19<12:16, 19.91s/it]2th batch Zeroshot performance: 93.75
+1. FAIL : Filter items with brand, color, hightop: ['Converse Low Black', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga']
+2. FAIL : Classifier with Filtered items: ['Converse Low Black']
+3. FAIL : Classify with name again about failed items: ['Converse Low Black', 'Converse Low Black']
+  5%|██████████▌                                                                                                                                                                                             | 2/38 [00:30<08:43, 14.55s/it]3th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga', 'Yeezy Boost 350 v2 Beluga']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+  8%|███████████████▊                                                                                                                                                                                        | 3/38 [00:37<06:18, 10.81s/it]4th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Converse Low Rush Blue']
+2. FAIL : Classifier with Filtered items: ['Vans Oldskool Black']
+3. FAIL : Classify with name again about failed items: ['Vans Oldskool Black']
+ 11%|█████████████████████                                                                                                                                                                                   | 4/38 [00:50<06:38, 11.71s/it]5th batch Zeroshot performance: 93.75
+1. FAIL : Filter items with brand, color, hightop: []
+2. FAIL : Classifier with Filtered items: ['Vans Oldskool Black', 'Vans Oldskool Black']
+3. FAIL : Classify with name again about failed items: ['Vans Oldskool Black', 'Vans Oldskool Black']
+ 13%|██████████████████████████▎                                                                                                                                                                             | 5/38 [01:07<07:36, 13.83s/it]6th batch Zeroshot performance: 90.62
+1. FAIL : Filter items with brand, color, hightop: ['Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment']
+2. FAIL : Classifier with Filtered items: ['Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment']
+3. FAIL : Classify with name again about failed items: ['Converse High Parchment', 'Converse High Parchment', 'Converse High Parchment']
+ 16%|███████████████████████████████▌                                                                                                                                                                        | 6/38 [01:22<07:28, 14.02s/it]7th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue']
+2. FAIL : Classifier with Filtered items: ['Converse High Parchment', 'Converse High Parchment']
+3. FAIL : Classify with name again about failed items: ['Dunk Low Retro Valerian Blue']
+ 18%|████████████████████████████████████▊                                                                                                                                                                   | 7/38 [01:36<07:22, 14.27s/it]8th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue', 'Dunk Low Retro Valerian Blue']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Dunk Low Retro Valerian Blue']
+ 21%|██████████████████████████████████████████                                                                                                                                                              | 8/38 [01:45<06:15, 12.53s/it]9th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: []
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 24%|███████████████████████████████████████████████▎                                                                                                                                                        | 9/38 [01:56<05:43, 11.84s/it]10th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 26%|████████████████████████████████████████████████████▎                                                                                                                                                  | 10/38 [02:05<05:08, 11.03s/it]11th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Jordan1 Retro High og Black Mocha', 'Converse High White', 'Converse High White']
+2. FAIL : Classifier with Filtered items: ['Converse High White']
+3. FAIL : Classify with name again about failed items: []
+ 29%|█████████████████████████████████████████████████████████▌                                                                                                                                             | 11/38 [02:18<05:13, 11.61s/it]12th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White', 'Converse High White']
+2. FAIL : Classifier with Filtered items: ['Converse High White', 'Converse High White', 'Converse High White']
+3. FAIL : Classify with name again about failed items: ['Converse High White']
+ 32%|██████████████████████████████████████████████████████████████▊                                                                                                                                        | 12/38 [02:32<05:26, 12.56s/it]13th batch Zeroshot performance: 90.62
+1. FAIL : Filter items with brand, color, hightop: ['Converse High White', 'Converse High White', 'Vans Authentic Red']
+2. FAIL : Classifier with Filtered items: ['Converse High White', 'Converse High White', 'Vans Authentic Red', 'Vans Authentic Red']
+3. FAIL : Classify with name again about failed items: ['Converse High White', 'Converse High White', 'Converse High White']
+ 34%|████████████████████████████████████████████████████████████████████                                                                                                                                   | 13/38 [02:48<05:40, 13.62s/it]14th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: []
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 37%|█████████████████████████████████████████████████████████████████████████▎                                                                                                                             | 14/38 [03:01<05:20, 13.34s/it]15th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Dunk Low Retro Black']
+ 39%|██████████████████████████████████████████████████████████████████████████████▌                                                                                                                        | 15/38 [03:06<04:08, 10.80s/it]16th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Dunk Low Retro Black', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 42%|███████████████████████████████████████████████████████████████████████████████████▊                                                                                                                   | 16/38 [03:10<03:10,  8.65s/it]17th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 45%|█████████████████████████████████████████████████████████████████████████████████████████                                                                                                              | 17/38 [03:14<02:35,  7.40s/it]18th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Vans Checkerboard Slipon', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 47%|██████████████████████████████████████████████████████████████████████████████████████████████▎                                                                                                        | 18/38 [03:21<02:24,  7.21s/it]19th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Jordan1 Mid Light Smoke Gray', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Jordan1 Mid Light Smoke Gray']
+ 50%|███████████████████████████████████████████████████████████████████████████████████████████████████▌                                                                                                   | 19/38 [03:27<02:11,  6.94s/it]20th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 53%|████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                                                                              | 20/38 [03:34<02:03,  6.87s/it]21th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow', 'Vans Sk8 Hi Golden Yellow']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 55%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                                                                                         | 21/38 [03:43<02:08,  7.57s/it]22th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Jordan1 Retro High og University Blue']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 58%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏                                                                                   | 22/38 [03:54<02:14,  8.41s/it]23th batch Zeroshot performance: 87.50
+1. FAIL : Filter items with brand, color, hightop: ['Converse Low Midnight Clover', 'Converse Low Midnight Clover', 'Converse Low Midnight Clover', 'Converse Low Midnight Clover']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Converse Low Midnight Clover', 'Converse Low Midnight Clover', 'Converse Low Midnight Clover', 'Converse Low Midnight Clover']
+ 61%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                                                                              | 23/38 [04:03<02:11,  8.74s/it]24th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Converse Low Midnight Clover', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Converse Low Midnight Clover']
+ 63%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                                                         | 24/38 [04:10<01:54,  8.16s/it]25th batch Zeroshot performance: 87.50
+1. FAIL : Filter items with brand, color, hightop: ['Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Yeezy Boost 350 v2 Zebra', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black']
+2. FAIL : Classifier with Filtered items: ['Converse Onestar Black']
+3. FAIL : Classify with name again about failed items: ['Yeezy Boost 350 v2 Zebra', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black']
+ 66%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                                                                    | 25/38 [04:18<01:45,  8.15s/it]26th batch Zeroshot performance: 93.75
+1. FAIL : Filter items with brand, color, hightop: ['Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Converse Onestar Black', 'Converse Onestar Black']
+ 68%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏                                                              | 26/38 [04:34<02:06, 10.51s/it]27th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Converse Onestar Black', 'Converse Onestar Black', 'Converse Onestar Black', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red']
+2. FAIL : Classifier with Filtered items: ['Converse Onestar Black']
+3. FAIL : Classify with name again about failed items: ['Converse Onestar Black']
+ 71%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                                                         | 27/38 [04:48<02:08, 11.67s/it]28th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red', 'Vans Marshmallow Red']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 74%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                                    | 28/38 [04:58<01:49, 10.93s/it]29th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Vans Style 36 Suede Dress Blues']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Vans Style 36 Suede Dress Blues']
+ 76%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                                               | 29/38 [05:08<01:36, 10.76s/it]30th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Adidas Gazelle Almost Yellow', 'Adidas Gazelle Almost Yellow', 'Adidas Gazelle Almost Yellow']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Adidas Gazelle Almost Yellow']
+ 79%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                                          | 30/38 [05:18<01:24, 10.54s/it]31th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Adidas Gazelle Almost Yellow', 'Adidas Gazelle Almost Yellow', 'Converse Low White']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Converse Low White']
+ 82%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎                                    | 31/38 [05:28<01:11, 10.28s/it]32th batch Zeroshot performance: 96.88
+1. FAIL : Filter items with brand, color, hightop: ['Converse Low White']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: ['Converse Low White']
+ 84%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌                               | 32/38 [05:38<01:01, 10.25s/it]33th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith', 'Adidas Stan Smith']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 87%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                          | 33/38 [05:45<00:46,  9.35s/it]34th batch Zeroshot performance: 87.50
+1. FAIL : Filter items with brand, color, hightop: ['Adidas Stan Smith', 'Adidas Stan Smith']
+2. FAIL : Classifier with Filtered items: ['Adidas Superstar Black', 'Adidas Superstar Black', 'Adidas Superstar Black', 'Adidas Superstar Black']
+3. FAIL : Classify with name again about failed items: ['Adidas Superstar Black', 'Adidas Superstar Black', 'Adidas Superstar Black', 'Adidas Superstar Black']
+ 89%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                     | 34/38 [06:01<00:45, 11.35s/it]35th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Dunk Low Retro Gym Red', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎               | 35/38 [06:10<00:32, 10.71s/it]36th batch Zeroshot performance: 100.00
+1. FAIL : Filter items with brand, color, hightop: ['Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone']
+2. FAIL : Classifier with Filtered items: []
+3. FAIL : Classify with name again about failed items: []
+ 95%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌          | 36/38 [06:14<00:16,  8.45s/it]37th batch Zeroshot performance: 93.75
+1. FAIL : Filter items with brand, color, hightop: ['Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Yeezy Boost 350 v2 Bone', 'Adidas Samba Vegan Black']
+2. FAIL : Classifier with Filtered items: ['Adidas Samba Vegan Black', 'Adidas Samba Vegan Black', 'Adidas Samba Vegan Black']
+3. FAIL : Classify with name again about failed items: ['Adidas Samba Vegan Black', 'Adidas Samba Vegan Black']
+ 97%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊     | 37/38 [06:27<00:09,  9.81s/it]38th batch Zeroshot performance: 93.75
+1. FAIL : Filter items with brand, color, hightop: ['Adidas Samba Vegan Black']
+2. FAIL : Classifier with Filtered items: ['Adidas Samba Vegan Black']
+3. FAIL : Classify with name again about failed items: ['Adidas Samba Vegan Black', 'Adidas Samba Vegan Black']
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 38/38 [06:44<00:00, 10.64s/it]
+brand : top1 Accuracy = 96.95723684210526%, top5 Accuracy = 96.95723684210526%
+color : top1 Accuracy = 88.56907894736842%, top5 Accuracy = 100.0%
+hightop : top1 Accuracy = 83.05921052631578%, top5 Accuracy = 100.0%
+sole : top1 Accuracy = 0.0%, top5 Accuracy = 0.0%
+name_zeroshot : top1 Accuracy = 88.32236842105263%, top5 Accuracy = 99.91776315789474%
+zeroshot : top1 Accuracy = 96.38157894736842%

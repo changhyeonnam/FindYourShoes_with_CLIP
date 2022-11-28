@@ -25,8 +25,12 @@ sole:
     - 'a bright photo of the sneakers of sole is {}'
 
 zeroshot:
-    - 'A photo of the {} shoes, brand is {}, color is {}, hightop is {}top.'
-    - 'Brand is {}, color is {}, a photo of a {} shoes, hightop is {}top.'
-    - 'Brand is {}, color is {}, hightop is {}top, a photo of the {} shoes'
+    - 'A photo of the {} shoes, brand is {}, color is {}, top is {}top.'
+    - 'Brand is {}, color is {}, a photo of a {} shoes, top is {}top.'
+    - 'Brand is {}, color is {}, top is {}top, a photo of the {} shoes.'
 
+zeroshot_with_sole:
+    - 'A photo of the {} shoes, brand is {}, color is {}, top is {}top, sole is {}.'
+    - 'Brand is {}, color is {}, a photo of a {} shoes, top is {}top, sole is {}.'
+    - 'Brand is {}, color is {}, top is {}top, a photo of the {} shoes, sole is {}.'
 

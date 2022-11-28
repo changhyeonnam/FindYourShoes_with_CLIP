@@ -1,5 +1,4 @@
 import os
-from dataclasses import dataclass, field
 from typing import Dict,List,Optional,Tuple
 from torch.utils.data import Dataset
 from PIL import Image
@@ -8,15 +7,7 @@ import numpy as np
 import pandas as pd
 import torch
 from tqdm import tqdm
-from utils import update_dict
-
-@dataclass
-class ImageAnnotation:
-    brand:str
-    color:str
-    hightop:str
-    sole:str
-    name:str
+from utils import update_dict,ImageAnnotation
 
 
 class ShoesImageDataset(Dataset):
@@ -24,7 +15,7 @@ class ShoesImageDataset(Dataset):
                 root:str,
                 meta_info_df:pd.DataFrame,
                 preprocess,
-                verbose: bool=True
+                verbose: bool=True,
                 ) ->None:
         super(ShoesImageDataset).__init__()
         self._root = root
@@ -34,10 +25,10 @@ class ShoesImageDataset(Dataset):
         if self.verbose:
             print(f'\n{"*" * 10} Preprocessing about Images is Started. {"*" * 10}\n')
             print(f'# class of name: {len(self.name_dict)}\n'
-                  f'# class of brand: {len(self.brand_dict)}\n'
-                  f'# class of color: {len(self.color_dict)}\n'
-                  f'# class of hightop: {len(self.hightop_dict)}\n'
-                  f'# class of sole: {len(self.sole_dict)}\n'
+                  f'# class of brand: {len(self.brand_dict)}, {self.brand_dict}\n'
+                  f'# class of color: {len(self.color_dict)}, {self.color_dict}\n'
+                  f'# class of hightop: {len(self.hightop_dict)}, {self.hightop_dict}\n'
+                  f'# class of sole: {len(self.sole_dict)}, {self.sole_dict}\n'
                   f'# class of meta: {len(self.meta_dict)}')
 
         self.preproc_image_list = self._parse_image_files(root=self._root, name_dict=self.name_dict)

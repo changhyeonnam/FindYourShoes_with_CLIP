@@ -42,8 +42,11 @@ class TextPreCompute:
     def get_precomputed_text(self):
         return self.name_weights, self.brand_weights, self.color_weights, self.hightop_weights, self.sole_weights
 
-    def compute_prompt_name(self, classnames,brand,color,hightop):
-        templates = self.prompt_dict['zeroshot']
+    def compute_prompt_name(self, classnames,brand,color,hightop,sole,use_sole=False):
+        if use_sole:
+            templates = self.prompt_dict['zeroshot_with_sole']
+        else:
+            templates = self.prompt_dict['zeroshot']
         device = self.device
         model = self.model
         with torch.no_grad():
@@ -52,15 +55,21 @@ class TextPreCompute:
                 texts = []
                 for i, template in enumerate(templates):
                     if i == 0:
-                        texts.append(template.format(classname,brand,color,hightop))
-                    # elif i==1:
-                    #     texts.append(template.format(brand, classname,color,hightop,sole))
-                    elif i==1:
-                        texts.append(template.format(brand,color,classname,hightop))
-                    # elif i==3:
-                    #     texts.append(template.format(brand,color,hightop,classname,sole))
-                    elif i==2:
-                        texts.append(template.format(brand,color,hightop,classname))
+                        if use_sole:
+                            texts.append(template.format(classname, brand, color, hightop, sole))
+                        else:
+                            texts.append(template.format(classname, brand, color, hightop))
+                    if i == 1:
+                        if use_sole:
+                            texts.append(template.format(brand, color, classname, hightop, sole))
+                        else:
+                            texts.append(template.format(brand, color, classname, hightop))
+                    if i == 2:
+                        if use_sole:
+                            texts.append(template.format(brand, color, hightop, classname, sole))
+                        else:
+                            texts.append(template.format(brand, color, hightop, classname))
+
 
 
                 texts = clip.tokenize(texts).to(device)  # tokenize
