@@ -7,7 +7,7 @@ import os
 from prompt_compute import TextPreCompute
 from utils import invert_dict,load_meta_info,build_feat_inv_dict
 import numpy as np
-from collections import Counter
+from collections import Counter, defaultdict
 
 class ImageCandidate:
     def __init__(self, infer_path, preprocess):
@@ -17,7 +17,8 @@ class ImageCandidate:
     def _parse_image_files(self, infer_path: str, preprocess):
         validate_format = ['jpg', 'png', 'jpeg']
         dir_list = os.listdir(path=infer_path)
-        preproc_image_dict = {}
+        # preproc_image_dict = {}
+        preproc_image_dict = defaultdict(list)
         for prod_dir in tqdm(dir_list):
             # get prod_name
             prod_split_underscore = prod_dir.split('_')
@@ -25,10 +26,9 @@ class ImageCandidate:
                 print(f"Wrong product name: {prod_dir}")
                 continue
             product_name = prod_split_underscore[4].strip() # extract name of shoes
-            
-            # if product_name not in preproc_image_dict:  # dict에 신발 이름 추가 but 같은 이름 신발 1개 있으면 추가 안됨(신발당 3장)
+            # if product_name not in preproc_image_dict:
             preproc_image_dict[product_name]=[]
-            # else:   # dict에 이미 같은 product name으로 된 이름 있어도 같은 name으로
+            # else:
             path = os.path.join(infer_path, prod_dir)
             file_list = os.listdir(path)
             for file_name in file_list:
@@ -38,6 +38,11 @@ class ImageCandidate:
                     print(file_path)
                     continue
                 preproc_image = preprocess(Image.open(file_path))
+                """
+                preproc_list = [(product_name, preproc_image)]
+                for k, v in preproc_list:
+                    preproc_image_dict[k].append(v)
+                """
                 preproc_image_dict[product_name].append(preproc_image)
 
         return preproc_image_dict
@@ -188,7 +193,6 @@ class Recommend:
         products = []
         preproc_images = []
         rec_list = []
-        # print(preproc_image_dict)
         for product, preproc_image_list in preproc_image_dict.items():
             if product == classified_product:
                 continue
@@ -208,7 +212,6 @@ class Recommend:
         count = Counter(rec_list)
         print('count: ', count)
         max_count = (count.most_common(1))[0][0]
-        print('max_count: ', max_count)
         # top3k_idx = logits.topk(3, 0, True, True)[1].t().flat ten().tolist()
         print(f"Recommended item is {max_count}")
 
