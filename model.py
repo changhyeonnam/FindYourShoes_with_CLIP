@@ -172,7 +172,7 @@ def main(root_path, meta_info_path, prompt_path):
 
     logits = CustomCLIP(name_dict, model)
     print()
-    print("@@@@@@@@@@@@@")
+    print("@@@@@@@@@@@")
 
 if __name__ == '__main__':
     root_path = "dataset"
