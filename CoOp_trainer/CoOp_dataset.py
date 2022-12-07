@@ -9,7 +9,6 @@ import torch
 from tqdm import tqdm
 from utils import update_dict,ImageAnnotation
 
-
 class ShoesImageDataset(Dataset):
     def __init__(self,
                 root:str,
@@ -41,10 +40,10 @@ class ShoesImageDataset(Dataset):
         product_id, preproc_image = line
 
         meta_info = self.meta_dict[product_id]
-        brand,color,hightop,sole = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.sole
-        bid,cid,hid,sid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.sole_dict[sole]
+        brand,color,hightop,sole,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.sole,meta_info.name
+        # bid,cid,hid,sid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.sole_dict[sole]
 
-        return product_id, preproc_image, bid, cid, hid,sid
+        return preproc_image, brand, self.brand_dict[brand]
 
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
@@ -108,6 +107,9 @@ class ShoesImageDataset(Dataset):
         return preproc_image_list
 
 if __name__ == "__main__":
+    root_path = "../dataset"
+    meta_info_path = "../meta_info.csv"
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # print available models

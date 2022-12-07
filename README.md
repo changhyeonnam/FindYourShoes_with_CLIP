@@ -1,4 +1,4 @@
-# Find Your Shoes with CLIP
+# Find Your Shoes with CLIP (On going project)
 
 This repository is about Find Your Shoes using [CLIP(Contrastive Language-Image PreTraining)](https://github.com/openai/CLIP) model which is from openai. 
 
