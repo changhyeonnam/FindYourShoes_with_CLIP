@@ -1,14 +1,14 @@
 # Find Your Shoes with CLIP (On going project)
 
-This repository is about Find Your Shoes using [CLIP(Contrastive Language-Image PreTraining)](https://github.com/openai/CLIP) model which is from openai. 
+This repository is about Find Your Shoes using [CLIP(Contrastive Language-Image PreTraining)](https://github.com/openai/CLIP) model which is from OpenAI. 
 
 We thought it would be a meaningful service if we could search for the shoes by image when we don't know the name of the shoes, and search again by changing some features in the shoes. 
 So we developed the service by limiting the dataset to shoes.
 
 For example, when text for different color info from original color and a user's shoes image were given as an input, the model finds the same kind of shoes in the given text color.
 
-We developed this service which is inspired by [Google's image search](https://images.google.com/). 
-We found that our service is very similiar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement this service.
+We developed this service inspired by [Google's image search](https://images.google.com/). 
+We found that our service is very similiar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement.
 
 This Project is ongoing which is completed by 2022.12. This is to-do-list about our development.
 
@@ -25,7 +25,7 @@ This Project is ongoing which is completed by 2022.12. This is to-do-list about 
 - [ ]  Use Few shot method for inference to improve performance (ongoing).
 - [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/).
 
-## 1. Dataset
+## Dataset
 
 There were not existing shoes labeled dataset which include various features (e.g, brand, color, hightop, sole). And also, there were not stable crawler for crawling full size image from google. So we made our own [Crawler](https://github.com/changhyeonnam/Google-Full-size-image-crawler) using python, selenium. 
 
@@ -44,9 +44,9 @@ For filtering crawled dataset, we made crawling Rule for our dataset. We followe
 
 **We will not use datasets for commercial purposes and we are going to share dataset when it is collected.**
 
-## 3.Method
+## Method
 
-### 3.1 Prompt Ensemble
+### 1. Prompt Ensemble
 
 우리는 기본적으로  5단계에 걸쳐서 모델을 실험하고, 성능 향상시키고 있다. 
 
@@ -77,13 +77,13 @@ zeroshot : top1 Accuracy = 96.38157894736842%
 sh dataset.sh
 ```
 
-### Before run the model, You should generate table for shoes table.
+### Before run the model, You should generate table for shoes information.
 
 ```jsx
 python3 csv_generator.py
 ```
 
-### Experiment for evaluing model
+### Experiment for evaluating model
 
 ```jsx
 sh run_experiment.sh
