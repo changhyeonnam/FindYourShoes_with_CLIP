@@ -1,3 +1,6 @@
+import sys
+sys.path.append('..')
+
 import dataclasses
 
 import pandas as pd
@@ -26,8 +29,8 @@ def main():
 
     cfg = Config
     cfg.device = device
-    cfg.batch_size = 32
-    cfg.epochs = 1
+    cfg.batch_size = 128
+    cfg.epochs = 200
     cfg.learning_rate = 2e-3
     # print available models
     print('This is available models: ', clip.available_models())
@@ -40,12 +43,12 @@ def main():
     dataset = ShoesImageDataset(root=root_path,
                                 preprocess=preprocess,
                                 meta_info_df=meta_info_df,
-                                verbose=False)
-    brand_dict = dataset.brand_dict
-    dataloader = DataLoader(dataset=dataset, batch_size=cfg.batch_size, shuffle=False, num_workers=1)
+                                verbose=True)
+    name_dict = dataset.name_dict
+    dataloader = DataLoader(dataset=dataset, batch_size=cfg.batch_size, shuffle=True, num_workers=1)
 
     # brand
-    classnames = list(brand_dict.keys())
+    classnames = list(name_dict.keys())
 
     # setting hyper parameter
     learning_rate = cfg.learning_rate
@@ -55,12 +58,18 @@ def main():
 
     model = CoOp(cfg,classnames)
     optimizer = torch.optim.SGD(params=model.parameters(),lr=learning_rate)
-
+    Loss = torch.nn.CrossEntropyLoss()
     for epoch in range(0, epochs):
-        for i, (preproc_image, brand, brand_label) in enumerate(tqdm(dataloader, total=len(dataloader))):
+        for i, (preproc_image, name, name_label) in enumerate(tqdm(dataloader, total=len(dataloader))):
+            preproc_image,name_label  = preproc_image.to(device),name_label.to(device)
             pred = model(preproc_image)
-            print(pred)
-            exit(1)
+            loss = Loss(pred,name_label)
+            print(f'{i+1} epochs : loss value: {loss}')
+
+            loss.backward()
+            optimizer.zero_grad()
+            optimizer.step()
+
 
 if __name__ == '__main__':
     main()

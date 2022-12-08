@@ -43,7 +43,7 @@ class ShoesImageDataset(Dataset):
         brand,color,hightop,sole,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.sole,meta_info.name
         # bid,cid,hid,sid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.sole_dict[sole]
 
-        return preproc_image, brand, self.brand_dict[brand]
+        return preproc_image, name, product_id
 
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
@@ -76,6 +76,7 @@ class ShoesImageDataset(Dataset):
         dir_list = os.listdir(path=root)
         preproc_image_list = []
         preproc_image_dict = {}
+
         for prod_dir in tqdm(dir_list):
             # get prod_name
             prod_split_underscore = prod_dir.split('_')
@@ -90,6 +91,7 @@ class ShoesImageDataset(Dataset):
             path = os.path.join(root, prod_dir)
             file_list = os.listdir(path)
             preproc_image_dict[prod_name]=len(file_list)
+            count = 0
             for file_name in file_list:
                 file_path = os.path.join(path,file_name)
                 file_path_check = file_path.split('.')
@@ -98,6 +100,9 @@ class ShoesImageDataset(Dataset):
                     continue
                 preproc_image = self._preprocess(Image.open(file_path))
                 preproc_image_list.append([prod_id,preproc_image])
+                count+=1
+                if count==32:
+                    break
         print(f'Number of total preprocessed items: {len(preproc_image_list)}')
         if self.verbose:
             for k,v in preproc_image_dict.items():
