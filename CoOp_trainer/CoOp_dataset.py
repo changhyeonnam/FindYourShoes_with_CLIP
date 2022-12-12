@@ -15,11 +15,18 @@ class ShoesImageDataset(Dataset):
                 meta_info_df:pd.DataFrame,
                 preprocess,
                 verbose: bool=True,
+                filter_file_set =None,
+                mode='train',
+                feautre = 'name'
                 ) ->None:
         super(ShoesImageDataset).__init__()
         self._root = root
         self._preprocess = preprocess
         self.verbose = verbose
+        # for validation set
+        self.filter_file_set = filter_file_set
+        self.mode = mode
+        self.feature = feautre
         self.name_dict, self.brand_dict, self.color_dict, self.hightop_dict, self.sole_dict, self.meta_dict = self._load_meta_info(meta_info_df)
         if self.verbose:
             print(f'\n{"*" * 10} Preprocessing about Images is Started. {"*" * 10}\n')
@@ -30,7 +37,7 @@ class ShoesImageDataset(Dataset):
                   f'# class of sole: {len(self.sole_dict)}, {self.sole_dict}\n'
                   f'# class of meta: {len(self.meta_dict)}')
 
-        self.preproc_image_list = self._parse_image_files(root=self._root, name_dict=self.name_dict)
+        self.preproc_image_list, self.file_set = self._parse_image_files(root=self._root, name_dict=self.name_dict)
 
     def __len__(self):
         return len(self.preproc_image_list)
@@ -41,9 +48,18 @@ class ShoesImageDataset(Dataset):
 
         meta_info = self.meta_dict[product_id]
         brand,color,hightop,sole,name = meta_info.brand, meta_info.color, meta_info.hightop, meta_info.sole,meta_info.name
-        # bid,cid,hid,sid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.sole_dict[sole]
+        bid,cid,hid,sid = self.brand_dict[brand], self.color_dict[color], self.hightop_dict[hightop], self.sole_dict[sole]
+        if self.feature == 'brand':
+            return preproc_image, brand, bid
+        if self.feature == 'color':
+            return preproc_image, color, cid
+        if self.feature == 'hightop':
+            return preproc_image, hightop, hid
+        if self.feature == 'sole':
+            return preproc_image, sole, sid
+        if self.feature == 'name':
+            return preproc_image, name, product_id
 
-        return preproc_image, name, product_id
 
     def __getitem__(self, idx):
         return self._line_mapper(self.preproc_image_list[idx])
@@ -77,6 +93,7 @@ class ShoesImageDataset(Dataset):
         preproc_image_list = []
         preproc_image_dict = {}
 
+        file_set = set()
         for prod_dir in tqdm(dir_list):
             # get prod_name
             prod_split_underscore = prod_dir.split('_')
@@ -92,7 +109,10 @@ class ShoesImageDataset(Dataset):
             file_list = os.listdir(path)
             preproc_image_dict[prod_name]=len(file_list)
             count = 0
+
             for file_name in file_list:
+                if self.mode == 'validation' and file_name in self.filter_file_set:
+                    continue
                 file_path = os.path.join(path,file_name)
                 file_path_check = file_path.split('.')
                 if file_path_check[-1] not in validate_format:
@@ -101,7 +121,8 @@ class ShoesImageDataset(Dataset):
                 preproc_image = self._preprocess(Image.open(file_path))
                 preproc_image_list.append([prod_id,preproc_image])
                 count+=1
-                if count==32:
+                file_set.add(file_name)
+                if count==16:
                     break
         print(f'Number of total preprocessed items: {len(preproc_image_list)}')
         if self.verbose:
@@ -109,7 +130,7 @@ class ShoesImageDataset(Dataset):
                 print(f'# {k} : {v}')
 
             print(f'\n{"*"*10} Preprocessing about images is Completed. {"*"*10}\n')
-        return preproc_image_list
+        return preproc_image_list,file_set
 
 if __name__ == "__main__":
     root_path = "../dataset"

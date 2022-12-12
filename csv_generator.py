@@ -18,17 +18,18 @@ def foldername_split(PATH):
     return brand, hightop, color, sole, name
 
 
-def generate_csv(brand, hightop, color, sole, name):
+def generate_csv(brand, hightop, color, sole, name,meta_filename):
     csv_made = pd.DataFrame(name, columns=['name'])
     csv_made['brand'] = brand
     csv_made['color'] = color
     csv_made['hightop'] = hightop
     csv_made['sole'] = sole
     print(f'meta information dataframe information : {csv_made.info}')
-    csv_made.to_csv("meta_info.csv", index=False)
+    csv_made.to_csv(meta_filename, index=False)
 
 
 if __name__ == '__main__':
-    PATH = 'dataset'
+    PATH = 'final_dataset'
+    meta_filename = 'meta_info_final.csv'
     brand, hightop, color, name, sole = foldername_split(PATH)
-    generate_csv(brand, hightop, color, name, sole)
+    generate_csv(brand, hightop, color, name, sole,meta_filename)

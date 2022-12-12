@@ -73,6 +73,7 @@ class PromptLearner(nn.Module):
         clip_imsize = clip_model.visual.input_resolution
         cfg_imsize = 224
         assert cfg_imsize == clip_imsize, f"cfg_imsize ({cfg_imsize}) must equal to clip_imsize ({clip_imsize})"
+        CSC_BOOL = False
 
         if ctx_init:
             # use given words to initialize context vectors
@@ -86,12 +87,12 @@ class PromptLearner(nn.Module):
 
         else:
             # random initialization
-            # if cfg.TRAINER.COOP.CSC:
-            #     print("Initializing class-specific contexts")
-            #     ctx_vectors = torch.empty(n_cls, n_ctx, ctx_dim, dtype=dtype)
-            # else:
-            print("Initializing a generic context")
-            ctx_vectors = torch.empty(n_ctx, ctx_dim, dtype=dtype)
+            if CSC_BOOL:
+                print("Initializing class-specific contexts")
+                ctx_vectors = torch.empty(n_cls, n_ctx, ctx_dim, dtype=dtype)
+            else:
+                print("Initializing a generic context")
+                ctx_vectors = torch.empty(n_ctx, ctx_dim, dtype=dtype)
             nn.init.normal_(ctx_vectors, std=0.02)
             prompt_prefix = " ".join(["X"] * n_ctx)
 
@@ -189,9 +190,10 @@ class PromptLearner(nn.Module):
 
 
 class CustomCLIP(nn.Module):
-    def __init__(self, cfg, classnames, clip_model):
+    def __init__(self, cfg, clip_model, prompt_learner):
         super().__init__()
-        self.prompt_learner = PromptLearner(cfg, classnames, clip_model)
+        # self.prompt_learner = PromptLearner(cfg, classnames, clip_model)
+        self.prompt_learner = prompt_learner
         self.tokenized_prompts = self.prompt_learner.tokenized_prompts
         self.image_encoder = clip_model.visual
         self.text_encoder = TextEncoder(clip_model)
@@ -215,10 +217,9 @@ class CustomCLIP(nn.Module):
 
 
 class CoOp(nn.Module):
-    def __init__(self,cfg, classnames):
+    def __init__(self,cfg, classnames, clip_model):
         super(CoOp, self,).__init__()
         self.cfg = cfg
-        clip_model = load_clip_to_cpu(cfg)
 
         # if cfg.TRAINER.COOP.PREC == "fp32" or cfg.TRAINER.COOP.PREC == "amp":
         #     # CLIP's default precision is fp16
