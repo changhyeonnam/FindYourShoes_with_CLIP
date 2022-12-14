@@ -59,6 +59,9 @@ class ShoesImageDataset(Dataset):
             return preproc_image, sole, sid
         if self.feature == 'name':
             return preproc_image, name, product_id
+        else:
+            return product_id, preproc_image, bid, cid, hid,sid
+
 
 
     def __getitem__(self, idx):

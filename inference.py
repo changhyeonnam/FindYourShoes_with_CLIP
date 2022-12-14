@@ -27,6 +27,7 @@ class ImageCandidate:
                 preproc_image_dict[product_name]=[]
             path = os.path.join(infer_path, prod_dir)
             file_list = os.listdir(path)
+            count=0
             for file_name in file_list:
                 file_path = os.path.join(path,file_name)
                 file_path_check = file_path.split('.')
@@ -35,6 +36,9 @@ class ImageCandidate:
                     continue
                 preproc_image = preprocess(Image.open(file_path))
                 preproc_image_dict[product_name].append(preproc_image)
+                count+=1
+                if count==1:
+                    break
 
         return preproc_image_dict
 
@@ -212,9 +216,9 @@ def main():
     print('This is available models: ', clip.available_models())
     model, preprocess = clip.load('ViT-B/32')
 
-    meta_info_path = "meta_info.csv"
+    meta_info_path = "meta_info_final.csv"
     prompt_path = "config/prompt_template.yaml"
-    infer_path = "dataset_infer"
+    infer_path = "final_dataset"
 
     # preprocessing candidate images for inference
     image_candidate = ImageCandidate(infer_path, preprocess)

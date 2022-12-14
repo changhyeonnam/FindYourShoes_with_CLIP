@@ -1,4 +1,4 @@
-# Find Your Shoes with CLIP (On going project)
+# Find Your Shoes with CLIP (On-going project)
 
 This repository is about Find Your Shoes using [CLIP(Contrastive Language-Image PreTraining)](https://github.com/openai/CLIP) model which is from OpenAI. 
 
@@ -8,7 +8,7 @@ So we developed the service by limiting the dataset to shoes.
 For example, when text for different color info from original color and a user's shoes image were given as an input, the model finds the same kind of shoes in the given text color.
 
 We developed this service inspired by [Google's image search](https://images.google.com/). 
-We found that our service is very similiar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement.
+We found that our service is very similar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement.
 
 This Project is ongoing which is completed by 2022.12. This is to-do-list about our development.
 
@@ -19,16 +19,17 @@ This Project is ongoing which is completed by 2022.12. This is to-do-list about 
 - [x]  Applying prompt ensemble and run experiment with small dataset.
 - [x]  Applying prompt ensemble for inference.
 - [x]  Make demo in Command Line Interface.
-- [ ]  Constructing Large size of shoes dataset (ongoing, 7 brands(Nike, Converse, ASCIS, FILA, New Balance), 105 shoes (15 shose for each brands), at least 5k images.) (ongoing).
-- [ ]  Applying prompt ensemble and run experiment with Large dataset (ongoing)
-- [ ]  Applying CoOp, CoOpOp for prompt learning to improve performace (ongoing).
-- [ ]  Use Few shot method for inference to improve performance (ongoing).
-- [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/).
+- [x]  Constructing Large size of shoes dataset (ongoing, 7 brands(Nike, Converse, ASCIS, FILA, New Balance), 105 shoes (15 shose for each brands), at least 5k images.) (ongoing).
+- [x]  Applying prompt ensemble and run experiment with Large dataset.
+- [x]  Applying CoOp(Context Optimization) for prompt learning to improve performance.
+- [x]  Use Few shot method for inference to improve performance.
+- [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/) (ongoing).
 
 ## Dataset
 
-There were not existing shoes labeled dataset which include various features (e.g, brand, color, hightop, sole). And also, there were not stable crawler for crawling full size image from google. So we made our own [Crawler](https://github.com/changhyeonnam/Google-Full-size-image-crawler) using python, selenium. 
-
+There were not existing shoes labeled dataset which include various features (e.g, brand, color, hightop, sole). 
+And also, there were not stable crawler for crawling full size image from google. 
+So we made our own [Crawler](https://github.com/changhyeonnam/Google-Full-size-image-crawler) using python, selenium.
 For filtering crawled dataset, we made crawling Rule for our dataset. We followed this rule for crawling and filtering images. 
 
 ### Crawling Rule
@@ -48,17 +49,16 @@ For filtering crawled dataset, we made crawling Rule for our dataset. We followe
 
 ### 1. Prompt Ensemble
 
-우리는 기본적으로  5단계에 걸쳐서 모델을 실험하고, 성능 향상시키고 있다. 
-
-1. 신발 이미지가 주어져있다고 하자. 주어진 신발 이미지와 text prompt ensemble을 통해 brand(nike, adidas,..), color(red, blue, yellow, ..) , hightop(low or high)  각각에 대해 similiarity score를 계산한 뒤, top 1 score를 가진 feature를 뽑아내어 분류한다.
-2. 미리 만들어진 신발 아이템별로 Feature를 적어놓은 테이블(csv file)에서 3개의 Feature에 부합하는 신발들만을 filtering을한다.  
-3. 분류된 Feature(brand, color, hightop)와 filtering된 신발 이름에 prompt ensemble을 적용하여, 첫번째 similarity score를 계산한다. 
-4. 전체 아이템의 신발 이름을 prompte ensemble을 적용하여 두번째 similiarity score를 계산한다.
-5. 3번과 4번에서 계산된 similarity score 중 높은 score를 가진 신발 종류를 선택한다. 
+We basically experimented with the model over five steps. Let's assume that Shoes image is given.
+1. Put the given shoe image and promptenseble together in the clip model to obtain each simularity score for brand (nike, adidas,...), color (red, blue, yellow,...), and heightop (low or high). For each type, a feature with a top 1 score is extracted and classified.
+2. Filter the shoes that does not match the selected feature in the shoes table.
+3. Calculate the similarity score by applying the prompt ensemble  to the classified features (brand, color, hightop) and filtered shoe names.
+4. Calculate the simiarity score by applying prompt ensemble to the entire shoe name.
+5. Among the similarity scores calculated in 3 and 4, select the shoe type with the highest score.
 
 Small size dataset에 대한 실험에서 96.3%의 정확도를 얻었고, 각 feature에 대한 정확도는 다음과 같다.
 
-```jsx
+```bash
 brand : top1 Accuracy = 96.95723684210526%, top5 Accuracy = 96.95723684210526%
 color : top1 Accuracy = 88.56907894736842%, top5 Accuracy = 100.0%
 hightop : top1 Accuracy = 83.05921052631578%, top5 Accuracy = 100.0%
@@ -66,42 +66,53 @@ name_zeroshot : top1 Accuracy = 88.32236842105263%, top5 Accuracy = 99.917763157
 zeroshot : top1 Accuracy = 96.38157894736842%
 ```
 
-- **Experiment about Few shot method for inference, Prompt learning (CoOp, CoOpOp) is not completed.**
-- **Experiment with Large Dataset is not completed.**
+- **Experiment with Large Dataset.**
 
 ## Quick Start
 
 ### Download Dataset
-
-```jsx
+(not implemented yet. it will be added.)
+```bash
 sh dataset.sh
 ```
 
 ### Before run the model, You should generate table for shoes information.
-
-```jsx
+(This require dataset. )
+```bash
 python3 csv_generator.py
 ```
 
 ### Experiment for evaluating model
+(This require dataset. )
 
-```jsx
-sh run_experiment.sh
+**using only prompt ensemble version(not CoOp)**
+```bash
+python3 main.py
+```
+**using CoOp**
+```bash
+cd CoOp_trainer
+python3 exp_CoOp.py
 ```
 
 ### Inference
-
 For inference you should locate your image in img folder and run below command.
 
-```jsx
-sh inference.sh
+(This require dataset. )
+**using only prompt ensemble version(not CoOp)**
+```bash
+python3 infer.py
+```
+**using CoOp**
+```bash
+cd CoOp_trainer
+python3 CoOp_infer.py
 ```
 
-## Demo (Command Line Interface)
 
 ## Reference
-
-1. Clip
-2. Prompt ensemble
-3. CoOp
-4. CoOpOp
+1. [Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
+1. [CLIP openai blog post](https://openai.com/blog/clip/)
+2. [Multi-prompt](http://pretrain.nlpedia.ai/data/pdf/multi-prompt.pdf)
+3. [P-Tuning v2: Prompt Tuning Can Be Comparable to Fine-tuning Universally Across Scales and Tasks](https://arxiv.org/abs/2110.07602)
+4. [Learning to Prompt for Vision-Language Models](https://arxiv.org/abs/2109.01134)
