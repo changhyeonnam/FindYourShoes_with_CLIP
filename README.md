@@ -11,6 +11,7 @@ We developed this service inspired by [Google's image search](https://images.goo
 We found that our service is very similar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement.
 
 This Project is ongoing which is completed by 2022.12. This is to-do-list about our development.
+Our final presentation slide is completed!. This is link : [slide link](https://docs.google.com/presentation/d/1wV-ke1FDVbulnFdVXPnU6Sb2U8KFbmP5AiH0pkGLwSY/edit?usp=sharing)
 
 ### **To do list for our project**
 
@@ -67,6 +68,18 @@ zeroshot : top1 Accuracy = 96.38157894736842%
 ```
 
 - **Experiment with Large Dataset.**
+- Inference without prompt learner
+
+|  | Brand  | Color | Hightop | Sole | Name |
+| --- | --- | --- | --- | --- | --- |
+| Top 1 | 89.75 | 59.23 | 94.69 | 14.71 | 44.48 |
+| Top 5 | 99.87 | 93.65 | 100 | 99.76 | 78.77 |
+- Inference with prompt learner
+
+|  | Brand  | Color | Hightop | Sole | Name |
+| --- | --- | --- | --- | --- | --- |
+| Top 1 | 97.47 | 95 | 98.43 | 99.25 | 93.19 |
+| Top 5 | 99.96 | 99.65 | 100 | 100 | 99.52 |
 
 ## Quick Start
 
@@ -96,9 +109,10 @@ python3 exp_CoOp.py
 ```
 
 ### Inference
-For inference you should locate your image in img folder and run below command.
+For inference, you should locate your image in img folder and run below command.
 
 (This require dataset. )
+
 **using only prompt ensemble version(not CoOp)**
 ```bash
 python3 infer.py
