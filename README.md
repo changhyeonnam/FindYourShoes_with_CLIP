@@ -26,6 +26,10 @@ Our final presentation slide is completed!. This is link : [slide link](https://
 - [x]  Use Few shot method for inference to improve performance.
 - [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/) (ongoing).
 
+## Demo
+
+<iframe src="https://drive.google.com/file/d/1u0vTlQpYbmwrDRkbKhmPT3izEzf0prIl/preview" width="640" height="480" allow="autoplay"></iframe>
+
 ## Dataset
 
 There were not existing shoes labeled dataset which include various features (e.g, brand, color, hightop, sole). 
