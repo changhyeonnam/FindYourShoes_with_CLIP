@@ -27,8 +27,11 @@ Our final presentation slide is completed!. This is link : [slide link](https://
 - [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/) (ongoing).
 
 ## Demo
+1. Demo with Jordan 1 Retro High og Chicago  
+    ![demo_1](demo_1.gif)
+2. Demo with New Balance 574
+    ![demo_2](demo_2.gif)
 
-<iframe src="https://drive.google.com/file/d/1u0vTlQpYbmwrDRkbKhmPT3izEzf0prIl/preview" width="640" height="480" allow="autoplay"></iframe>
 
 ## Dataset
 
