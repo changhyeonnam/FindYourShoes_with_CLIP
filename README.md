@@ -64,16 +64,6 @@ We basically experimented with the model over five steps. Let's assume that Shoe
 4. Calculate the simiarity score by applying prompt ensemble to the entire shoe name.
 5. Among the similarity scores calculated in 3 and 4, select the shoe type with the highest score.
 
-Small size dataset에 대한 실험에서 96.3%의 정확도를 얻었고, 각 feature에 대한 정확도는 다음과 같다.
-
-```bash
-brand : top1 Accuracy = 96.95723684210526%, top5 Accuracy = 96.95723684210526%
-color : top1 Accuracy = 88.56907894736842%, top5 Accuracy = 100.0%
-hightop : top1 Accuracy = 83.05921052631578%, top5 Accuracy = 100.0%
-name_zeroshot : top1 Accuracy = 88.32236842105263%, top5 Accuracy = 99.91776315789474%
-zeroshot : top1 Accuracy = 96.38157894736842%
-```
-
 - **Experiment with Large Dataset.**
 - Inference without prompt learner
 
