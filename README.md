@@ -10,8 +10,10 @@ For example, when text for different color info from original color and a user's
 We developed this service inspired by [Google's image search](https://images.google.com/). 
 We found that our service is very similar to [NAVER OmniSearch](https://www.youtube.com/watch?v=jfGpplvNFFs) but we developed this service because it could be challenging and fun to implement.
 
-This Project is ongoing which is completed by 2022.12. This is to-do-list about our development.
+This Project is ongoing which is completed by 2023.1. This is to-do-list about our development.
 Our final presentation slide is completed!. This is link : [slide link](https://docs.google.com/presentation/d/1wV-ke1FDVbulnFdVXPnU6Sb2U8KFbmP5AiH0pkGLwSY/edit?usp=sharing)
+
+I need to refactorize codes. Current codes are messy.
 
 ### **To do list for our project**
 
