@@ -122,6 +122,10 @@ cd CoOp_trainer
 python3 CoOp_infer.py
 ```
 
+## Members
+- [Changhyeon Nam](https://github.com/changhyeonnam)
+- [Heeje Kim](https://github.com/beaglemong)
+- [Haejun Bae](https://github.com/hj1132)
 
 ## Reference
 1. [Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
