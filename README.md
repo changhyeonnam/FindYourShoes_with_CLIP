@@ -29,9 +29,9 @@ Our final presentation slide is completed!. This is link : [slide link](https://
 - [ ]  Implement demo program in web interface using [streamlit](https://streamlit.io/) (ongoing).
 
 ## Demo
-1. Demo with Jordan 1 Retro High og Chicago  
+1. Demo with Jordan 1 Retro High og Chicago (image : Jordan 1 Retro High og Chicago, text : I want same brand but color is different)
     ![demo_1](demo_1.gif)
-2. Demo with New Balance 574
+2. Demo with New Balance 574 (image : New Balance 574, text : I want similar shoes but brand is different)
     ![demo_2](demo_2.gif)
 
 
